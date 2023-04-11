@@ -23,8 +23,8 @@ router.post("/create", async (req, res) => {
   }
 });
 
-// Request 2 : Get All Shop data by GET => http://localhost:5000/shops
-router.get("/", async (req, res) => {
+// Request 2 : Get All Shop data by GET => http://localhost:5000/shops/allshops
+router.get("/allshops", async (req, res) => {
   console.log("Enter in this");
   try {
     const shopData = await Shop.find();

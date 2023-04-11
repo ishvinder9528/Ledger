@@ -1,55 +1,29 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
 
 const billSchema = new Schema(
   {
     billno: {
-      type: Number,
+      type: String,
       required: true,
     },
-    items: [
-      {
-        qty: {
-          type: Number,
-          required: true,
-        },
-        itemdesc: {
-          type: String,
-        },
-        price: {
-          type: Number,
-          required: true,
-        },
-        amount: {
-          type: String,
-        },
-        cgst: {
-          type: Number,
-        },
-        igst: {
-          type: Number,
-        },
-        gst: {
-          type: Number,
-        },
-        gramount:{
-            type: Number,
-        },
-        totalamount:{
-          type: Number,
-          default: 0,
-        },
-        
-      },
-    ],
+    billid:{
+      unique: true,
+      type:String,
+      required: true,
+    },
     shop: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:'shops'
+      ref:'Shop'
     },
+    status:{
+      type:"string",
+      default:"Paid"
+    }
   },
   { timestamps: true }
 );
 
-const Bill = mongoose.model("bills", billSchema);
+const Bill = mongoose.model("Bill", billSchema);
 module.exports = Bill;

@@ -11,6 +11,7 @@ const port = process.env.PORT;
 const db = process.env.DATABASE;
 
 const shopRoute = require("./routes/shopRoute");
+const billRoute = require("./routes/billRoute");
 
 mongoose
   .connect(db)
@@ -23,6 +24,7 @@ mongoose
         //     res.json({message:"whyy??"})
         // })
         app.use("/shops", shopRoute);
+        app.use("/bills", billRoute);
       } else {
         console.error("error =>", error);
       }
