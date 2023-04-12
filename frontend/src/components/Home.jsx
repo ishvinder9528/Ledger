@@ -10,7 +10,7 @@ const Home = () => {
 
       <br />
       <div className="mt-5 text-center container">
-        <h1>Welocome to Gurukirpa Ledger Ledger</h1>
+        <h1>Welocome to Gurukirpa Collection Ledger</h1>
         <h5 className="mx">A PerFect DataBase</h5>
         <div className="d-grid gap-2 col-6 mx-auto my-5">
           <button
