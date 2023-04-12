@@ -17,11 +17,11 @@ const shopSchema = new Schema({
   },
   pendingAmount: {
     type: Number,
-    default: NaN,
+    default: null,
   },
   phone:{
     type:Number,
-    default: NaN,
+    default: null,
   }
 });
 

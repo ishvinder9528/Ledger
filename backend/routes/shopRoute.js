@@ -7,11 +7,13 @@ router.post("/create", async (req, res) => {
   console.log("Enter in this");
   try {
     console.log(req.body);
-    const { name, gstno, location } = await req.body;
+    const { name, gstno, location, pendingAmount, phone } = await req.body;
     const shop = new Shop({
       name: name,
       gstno: gstno,
       location: location,
+      phone: phone,
+      pendingAmount: pendingAmount,
     });
     console.log(shop);
     const saveShop = await shop.save();
@@ -28,7 +30,7 @@ router.get("/allshops", async (req, res) => {
   console.log("Enter in this");
   try {
     const shopData = await Shop.find();
-    res.json({ shopData: shopData });
+    res.json({ shopData });
     console.log("your shops data =>", shopData);
   } catch (err) {
     console.log("error => " + err);
@@ -38,7 +40,6 @@ router.get("/allshops", async (req, res) => {
 
 // Request 3 : Get particular Shop data by GET => http://localhost:5000/shops/:id
 router.get("/:id", async (req, res) => {
-  console.log("Enter in this");
   try {
     const { id } = req.params;
     const shop = await Shop.findById(id);
@@ -59,14 +60,7 @@ router.get("/:id", async (req, res) => {
 router.post("/:id", async (req, res) => {
   console.log("Enter in this");
   try {
-    const { name, gstno, address, phone } = req.body;
     const { id } = req.params;
-    const newShopData = {
-      name,
-      gstno,
-      address,
-      phone,
-    };
 
     const shop = await Shop.findById(id);
     if (!shop) {

@@ -1,6 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
-
 
 const billSchema = new Schema(
   {
@@ -8,19 +7,39 @@ const billSchema = new Schema(
       type: String,
       required: true,
     },
-    billid:{
+    billid: {
       unique: true,
-      type:String,
+      type: String,
       required: true,
     },
     shop: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:'Shop'
+      ref: "Shop",
     },
-    status:{
-      type:"string",
-      default:"Paid"
-    }
+    status: {
+      type: "string",
+      default: "Paid",
+    },
+    cgst: {
+      type: Number,
+    },
+    igst: {
+      type: Number,
+    },
+    gst: {
+      type: Number,
+    },
+    gramount: {
+      type: Number,
+    },
+    totalamount: {
+      type: Number,
+      default: 0,
+    },
+    balanceleft: {
+      type: Number,
+      default:0,
+    },
   },
   { timestamps: true }
 );
