@@ -6,11 +6,11 @@ const Home = () => {
   return (
     <>
       <br />
-      <br />
+
 
       <br />
       <div className="mt-5 text-center container">
-        <h1>Welocome to Gurukirpa Collection Ledger</h1>
+        <h1>Welocome to Guru<span style={{color:"orange"}}><strong>Kirpa</strong></span> Collection Ledger</h1>
         <h5 className="mx">A PerFect DataBase</h5>
         <div className="d-grid gap-2 col-6 mx-auto my-5">
           <button
@@ -23,7 +23,7 @@ const Home = () => {
         </div>
         <br />
         <br />
-        <div className="container border border-warning w-74 p-4">
+        <div className="container border border-warning w-75 p-4">
           <ShopTable value={2} />
           <table class="table">
             <tbody>
@@ -54,7 +54,7 @@ const Home = () => {
             className="col-span-5 container mt-4 btn btn-outline-warning btn-lg"
             onClick={() => navigate("/shop")}
           >
-            Go to Access The Ledger
+            Click to Access The Ledger
           </button>
         </div>
       </div>
