@@ -1,12 +1,28 @@
-import React from "react";
-import {Link} from 'react-router-dom'
+import React, { useContext } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import ShopContext from "../contexts/shop/shopContext";
 const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const context = useContext(ShopContext);
+  const { isEdit, setIsEdit } = context;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate("/shop");
+  };
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-            GuruKirpa Collection
+            Guru
+            <span style={{ color: "orange" }}>
+              <strong>Kirpa</strong>
+            </span>{" "}
+            Collection
           </Link>
           <button
             className="navbar-toggler"
@@ -32,16 +48,26 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
+            <form className="d-flex" onSubmit={handleSubmit}>
+              {location.pathname === "/" && (
+                <button className="btn btn-warning mx-1" type="submit">
+                  Database
+                </button>
+              )}
+              {location.pathname === "/shop" && isEdit.value && (
+                <button
+                  className="btn btn-warning mx-1"
+                  type="submit"
+                  onClick={() =>
+                    setIsEdit({
+                      value: false,
+                      id: null,
+                    })
+                  }
+                >
+                  Add New Shop
+                </button>
+              )}
             </form>
           </div>
         </div>

@@ -1,9 +1,16 @@
 import React, { useContext, useEffect } from "react";
 import ShopContext from "../../contexts/shop/shopContext";
-
 const EditShop = () => {
   const context = useContext(ShopContext);
-  const { isEdit, getShopData, editShopData, setEditShopData,updateShop } = context;
+  const {
+    isEdit,
+    setIsEdit,
+    getShopData,
+    editShopData,
+    setEditShopData,
+    updateShop,
+    deleteShop,
+  } = context;
   useEffect(() => {
     setEditShopData({
       name: "",
@@ -22,19 +29,23 @@ const EditShop = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateShop(editShopData)
+    updateShop(editShopData);
     setEditShopData({
-        name: "",
-        gstno: "",
-        location: "",
-        phone: "",
-        pendingAmount: "",
-      });
+      name: "",
+      gstno: "",
+      location: "",
+      phone: "",
+      pendingAmount: "",
+    });
+    setIsEdit({
+      value: false,
+      id: "",
+    });
   };
 
   return (
-    <div className="mx-4 border border-warning  p-4">
-      <h3 className="text-center text-warning">Add Shop</h3>
+    <div className="mx-4 border border-success  p-4">
+      <h3 className="text-center text-success">Edit Shop</h3>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmfor="name" className="form-label">
@@ -112,9 +123,20 @@ const EditShop = () => {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">
-          Submit
+        <button type="submit" className="btn btn-success">
+          Modify
         </button>
+        <i
+          className="fa-solid fa-trash-can fa-xl mx-5"
+          style={{ color: "red" }}
+          onClick={() => {
+            deleteShop(editShopData._id);
+            setIsEdit({
+              value: false,
+              id: "",
+            });
+          }}
+        ></i>
       </form>
     </div>
   );

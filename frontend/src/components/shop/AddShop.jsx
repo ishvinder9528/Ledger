@@ -9,19 +9,23 @@ const AddShop = () => {
     phone: "",
     pendingAmount: "",
   });
-  const context = useContext(ShopContext)
-  const{addShop, getShops} =context
+  const context = useContext(ShopContext);
+  const { addShop, getShops } = context;
   const handleSubmit = (e) => {
     e.preventDefault();
-    addShop(shop)
+    addShop(shop);
     setShop({
-        name: "",
-        gstno: "",
-        location: "",
-        phone: null,
-        pendingAmount: null,
-    })
-    getShops()
+      name: "",
+      gstno: "",
+      location: "",
+      phone: "",
+      pendingAmount: "",
+    });
+    getShops();
+    getShops();
+    getShops();
+    getShops();
+    getShops();
   };
   const onChange = (e) => {
     setShop({ ...shop, [e.target.name]: e.target.value });
@@ -106,7 +110,7 @@ const AddShop = () => {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-warning">
           Submit
         </button>
       </form>

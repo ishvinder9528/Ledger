@@ -1,12 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext,  } from "react";
 import { useLocation } from "react-router-dom";
 import ShopContext from "../../contexts/shop/shopContext";
+
+
 const ShopTableData = (props) => {
   const { shop } = props;
   const location = useLocation();
   const context = useContext(ShopContext);
-  const { deleteShop, setIsEdit, isEdit } = context;
-  return (
+  const { deleteShop, setIsEdit } = context;
+ 
+
+ return (
     <>
       <tr key={shop._id}>
         <th scope="row">{shop.name}</th>
@@ -33,7 +37,7 @@ const ShopTableData = (props) => {
               <i
                 className="fa-solid fa-trash-can fa-lg px-3"
                 style={{ color: "red" }}
-                onClick={() => deleteShop(shop._id)}
+                onClick={()=> deleteShop(shop._id)}
               ></i>
             </td>
             <td>
@@ -45,6 +49,7 @@ const ShopTableData = (props) => {
           </>
         )}
       </tr>
+
     </>
   );
 };

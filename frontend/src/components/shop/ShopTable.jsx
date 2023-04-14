@@ -10,11 +10,12 @@ const ShopTable = (props) => {
   const [searchText, setSearchText] = useState("");
   
   useEffect(() => {
+    console.log(loaded);
     if (!loaded) {
       getShops();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getShops, loaded, shops]);
+  }, [loaded]);
 
     const filteredShops = loaded && shops 
     ? shops.filter((shop) => {

@@ -6,11 +6,18 @@ const ShopState = (props) => {
   const [shops, setShops] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [alert, setAlert] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [isEdit, setIsEdit] = useState({
     value: false,
     id: "",
   });
-  const [editShopData, setEditShopData] = useState({});
+  const [editShopData, setEditShopData] = useState({
+    name: "",
+    gstno: "",
+    location: "",
+    phone: "",
+    pendingAmount: "", 
+  });
   const showAlert = (message, type) => {
     setAlert({
       msg: message,
@@ -143,6 +150,8 @@ const ShopState = (props) => {
         setIsEdit,
         editShopData,
         setEditShopData,
+        showModal,
+        setShowModal
       }}
     >
       {props.children}
