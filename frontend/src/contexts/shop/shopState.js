@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import ShopContext from "./shopContext";
-import Alert from "../../components/Alert";
 
 const ShopState = (props) => {
   const host = "http://localhost:5000";
   const [shops, setShops] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [alert, setAlert] = useState(null);
+  const [isEdit, setIsEdit] = useState({
+    value: false,
+    id: "",
+  });
+  const [editShopData, setEditShopData] = useState({});
   const showAlert = (message, type) => {
     setAlert({
       msg: message,
@@ -20,14 +24,17 @@ const ShopState = (props) => {
   // GET all shops from backend
   const getShops = async () => {
     try {
+      console.log("it loads me");
       const response = await fetch(`${host}/shops/allshops`, {
         method: "GET",
       });
-      let data = await response.json();
-      setShops(data.shopData);
-      setLoaded(true);
+      if (response.ok) {
+        let data = await response.json();
+        setShops(data.shopData);
+        setLoaded(true);
+      }
     } catch (error) {
-      console.log("Opps, Something went wrong", error);
+      showAlert("Opps, Something went wrong", "danger");
     }
   };
 
@@ -43,20 +50,101 @@ const ShopState = (props) => {
       });
       if (response.ok) {
         let data = await response.json();
-        console.log(data);
+        console.log("New Shop", data);
         setShops(shops.concat(data));
-        console.log(shops);
+        console.log("Total Shop", shops);
         showAlert("Shop Added Successfully!", "success");
       } else {
-        showAlert("GST number already exists", "danger");
+        showAlert(
+          "Name and GST Number Should be Unique and Required",
+          "danger"
+        );
       }
     } catch (error) {
       showAlert("Opps, Something went wrong", "danger");
     }
   };
 
+  // delete the shop
+  const deleteShop = async (id) => {
+    try {
+      const response = await fetch(`${host}/shops/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response);
+      if (response.ok) {
+        const newShop = shops.filter((shop) => {
+          return shop._id !== id;
+        });
+        setShops(newShop);
+        showAlert("Shop Deleted Successfully!", "success");
+      }
+    } catch (error) {
+      showAlert("Opps, Something went wrong", "danger");
+    }
+  };
+
+  // get the particular shop data
+  const getShopData = async (id) => {
+    try {
+      const response = await fetch(`${host}/shops/${id}`, {
+        method: "GET",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.shop);
+        setEditShopData(data.shop);
+      }
+    } catch (error) {
+      showAlert("Opps, Something went wrong", "danger");
+    }
+  };
+
+  // Update the shop data
+  const updateShop = async (data) => {
+    console.log(data);
+    const request = await fetch(`${host}/shops/${data._id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (request.ok) {
+      const newShops = JSON.parse(JSON.stringify(shops));
+      for (let i = 0; i < newShops.length; i++) {
+        const element = newShops[i];
+        if (element._id === data._id) {
+          newShops[i] = data;
+          break;
+        }
+      }
+      setShops(newShops);
+      showAlert("Shop Data Updated Successfully", "success");
+    }
+  };
+
   return (
-    <ShopContext.Provider value={{ shops, getShops, loaded, setLoaded ,addShop}}>
+    <ShopContext.Provider
+      value={{
+        shops,
+        getShops,
+        loaded,
+        setLoaded,
+        addShop,
+        alert,
+        deleteShop,
+        getShopData,
+        updateShop,
+        isEdit,
+        setIsEdit,
+        editShopData,
+        setEditShopData,
+      }}
+    >
       {props.children}
     </ShopContext.Provider>
   );

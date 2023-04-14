@@ -1,31 +1,37 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import ShopContext from "../../contexts/shop/shopContext";
 
-const AddShop = () => {
-  const [shop, setShop] = useState({
-    name: "",
-    gstno: "",
-    location: "",
-    phone: "",
-    pendingAmount: "",
-  });
-  const context = useContext(ShopContext)
-  const{addShop, getShops} =context
+const EditShop = () => {
+  const context = useContext(ShopContext);
+  const { isEdit, getShopData, editShopData, setEditShopData,updateShop } = context;
+  useEffect(() => {
+    setEditShopData({
+      name: "",
+      gstno: "",
+      location: "",
+      phone: "",
+      pendingAmount: "",
+    });
+    getShopData(isEdit.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEdit.id]);
+
+  const onChange = (e) => {
+    setEditShopData({ ...editShopData, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    addShop(shop)
-    setShop({
+    updateShop(editShopData)
+    setEditShopData({
         name: "",
         gstno: "",
         location: "",
-        phone: null,
-        pendingAmount: null,
-    })
-    getShops()
+        phone: "",
+        pendingAmount: "",
+      });
   };
-  const onChange = (e) => {
-    setShop({ ...shop, [e.target.name]: e.target.value });
-  };
+
   return (
     <div className="mx-4 border border-warning  p-4">
       <h3 className="text-center text-warning">Add Shop</h3>
@@ -40,7 +46,7 @@ const AddShop = () => {
             className="form-control"
             id="name"
             aria-describedby="name"
-            value={shop.name}
+            value={editShopData.name}
             onChange={onChange}
           />
         </div>
@@ -54,7 +60,7 @@ const AddShop = () => {
             className="form-control"
             id="gstno"
             aria-describedby="gstno"
-            value={shop.gstno}
+            value={editShopData.gstno}
             onChange={onChange}
           />
         </div>
@@ -69,7 +75,7 @@ const AddShop = () => {
               className="form-control"
               id="location"
               aria-describedby="location"
-              value={shop.location}
+              value={editShopData.location}
               onChange={onChange}
             />
           </div>
@@ -86,7 +92,7 @@ const AddShop = () => {
               id="phone"
               placeholder=" 9999999999"
               aria-describedby="phone"
-              value={shop.phone}
+              value={editShopData.phone}
               onChange={onChange}
             />
           </div>
@@ -101,7 +107,7 @@ const AddShop = () => {
             className="form-control"
             id="pendingAmount"
             aria-describedby="pendingAmount"
-            value={shop.pendingAmount}
+            value={editShopData.pendingAmount}
             onChange={onChange}
           />
         </div>
@@ -114,4 +120,4 @@ const AddShop = () => {
   );
 };
 
-export default AddShop;
+export default EditShop;

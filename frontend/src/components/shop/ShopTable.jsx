@@ -8,21 +8,21 @@ const ShopTable = (props) => {
   const { getShops, shops, loaded } = context;
   const location = useLocation();
   const [searchText, setSearchText] = useState("");
+  
   useEffect(() => {
     if (!loaded) {
       getShops();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getShops, loaded]);
+  }, [getShops, loaded, shops]);
 
-  // Filter the shops array based on the search text
-  const filteredShops = loaded
+    const filteredShops = loaded && shops 
     ? shops.filter((shop) => {
-        console.log(shop);
-        return shop.name.toLowerCase().includes(searchText.toLowerCase());
+        // console.log(shop);
+        return shop.name && shop.name.toLowerCase().includes(searchText.toLowerCase());
       })
     : shops;
-
+  
   return (
     <div className="mx-1 table-responsive ">
       <section>

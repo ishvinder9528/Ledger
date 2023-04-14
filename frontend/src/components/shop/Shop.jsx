@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import ShopTable from "./ShopTable";
 import { useNavigate } from "react-router-dom";
 import AddShop from "./AddShop";
+import EditShop from "./EditShop";
+import ShopContext from "../../contexts/shop/shopContext";
 const Shop = () => {
+    const context = useContext(ShopContext)
+    const {isEdit}= context
   const navigate = useNavigate();
   return (
     <div className="mt-5">
@@ -28,7 +32,7 @@ const Shop = () => {
           <ShopTable />
         </div>
         <div className="col-md-4">
-            <AddShop/>
+            {isEdit.value?<EditShop/>:<AddShop/>}
         </div>
       </div>
     </div>
