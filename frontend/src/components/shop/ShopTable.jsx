@@ -1,37 +1,93 @@
-import React, { useContext, useEffect, useCallback } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ShopContext from "../../contexts/shop/shopContext";
 import ShopTableData from "./ShopTableData";
-
+import { useLocation } from "react-router-dom";
 const ShopTable = (props) => {
   const { value } = props;
   const context = useContext(ShopContext);
-  const { getShops, shops } = context;
-
-  const memoizedGetShops = useCallback(() => {
-    getShops();
-  }, [getShops]);
-
+  const { getShops, shops, loaded } = context;
+  const location = useLocation();
+  const [searchText, setSearchText] = useState("");
   useEffect(() => {
-    memoizedGetShops();
-  }, [memoizedGetShops]);
+    if (!loaded) {
+      getShops();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getShops, loaded]);
+
+  // Filter the shops array based on the search text
+  const filteredShops = loaded
+    ? shops.filter((shop) => {
+        console.log(shop);
+        return shop.name.toLowerCase().includes(searchText.toLowerCase());
+      })
+    : shops;
 
   return (
-    <div className="container ">
+    <div className="mx-1 table-responsive ">
       <section>
-        <table className="table">
+        {!value && (
+          <>
+            <div className="container d-flex search-container my-2">
+              <span>
+                <i
+                  className="fa-solid fa-magnifying-glass border border-warning p-1 mt-1 mx-1"
+                  style={{ color: "orange" }}
+                ></i>
+              </span>
+              <span>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="search"
+                  name="search"
+                  placeholder="Search by Shop Name"
+                  onChange={(e) => {
+                    setSearchText(e.target.value);
+                  }}
+                />
+              </span>
+            </div>
+          </>
+        )}
+        
+        <table className="table table-center table-sm">
           <thead>
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col">GST No.</th>
-              <th scope="col">Location</th>
-              <th scope="col">Phone Number</th>
-              <th scope="col">Pending Amount</th>
+              <th scope="col" className="text-bg-warning">
+                Name
+              </th>
+              <th scope="col" className="text-bg-warning">
+                GST No.
+              </th>
+              <th scope="col" className="text-bg-warning">
+                Location
+              </th>
+              <th scope="col" className="text-bg-warning">
+                Phone Number
+              </th>
+              <th scope="col" className="text-bg-warning">
+                Pending Amount
+              </th>
+              {location.pathname !== "/" && (
+                <>
+                  <th scope="col" className="text-bg-warning">
+                    Edit
+                  </th>
+                  <th scope="col" className="text-bg-warning">
+                    Delete
+                  </th>
+                  <th scope="col" className="text-bg-warning">
+                    GO
+                  </th>
+                </>
+              )}
             </tr>
           </thead>
           <tbody>
             {value ? (
-              shops.length > 0 ? (
-                shops.slice(0, value).map((shop) => {
+              filteredShops.length > 0 ? (
+                filteredShops.slice(0, value).map((shop) => {
                   return <ShopTableData key={shop._id} shop={shop} />;
                 })
               ) : (
@@ -39,13 +95,13 @@ const ShopTable = (props) => {
                   <td colSpan="5">No data found</td>
                 </tr>
               )
-            ) : shops.length > 0 ? (
-              shops.map((shop) => {
+            ) : filteredShops.length > 0 ? (
+              filteredShops.map((shop) => {
                 return <ShopTableData key={shop._id} shop={shop} />;
               })
             ) : (
               <tr>
-                <td colSpan="5">No data found</td>
+                <td colSpan="8">No data found</td>
               </tr>
             )}
           </tbody>

@@ -5,57 +5,61 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <>
-      <br />
-      <br />
+      <div className="container">
+        <div className="row justify-content-center text-center">
+          <div className="col-12">
+            <h1 className="my-5">
+              Welcome to Guru
+              <span style={{ color: "orange" }}>
+                <strong>Kirpa</strong>
+              </span>{" "}
+              Collection Ledger
+            </h1>
+            <h5 className="mx-3 mb-5">A Perfect Database</h5>
+          </div>
+          <div className="col-12 col-sm-6 col-md-4 mb-3">
+            <button
+              className="btn btn-warning btn-lg btn-block"
+              onClick={() => navigate("/shop")}
+            >
+              Press to Start
+            </button>
+          </div>
 
-      <br />
-      <div className="mt-5 text-center container">
-        <h1>Welocome to Gurukirpa Collection Ledger</h1>
-        <h5 className="mx">A PerFect DataBase</h5>
-        <div className="d-grid gap-2 col-6 mx-auto my-5">
-          <button
-            className=" btn btn-warning btn-lg"
-            onClick={() => navigate("/shop")}
-          >
-            {" "}
-            Press to Start
-          </button>
-        </div>
-        <br />
-        <br />
-        <div className="container border border-warning w-74 p-4">
-          <ShopTable value={2} />
-          <table class="table">
-            <tbody>
-              <tr>
-                <td>....</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>..</td>
-              </tr>
-              <tr>
-                <td>....</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>..</td>
-              </tr>
-              <tr>
-                <td>....</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>..</td>
-              </tr>
-            </tbody>
-          </table>
-          <button
-            className="col-span-5 container mt-4 btn btn-outline-warning btn-lg"
-            onClick={() => navigate("/shop")}
-          >
-            Go to Access The Ledger
-          </button>
+          <div className=" border border-warning w-75 p-4 mx-auto my-4">
+            <ShopTable value={2} />
+            <table className="table">
+              <tbody>
+                <tr>
+                  <td>....</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>..</td>
+                </tr>
+                <tr>
+                  <td>....</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>..</td>
+                </tr>
+                <tr>
+                  <td>....</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>..</td>
+                </tr>
+              </tbody>
+            </table>
+            <button
+              className="col-span-5 container mt-4 btn btn-outline-warning btn-lg"
+              onClick={() => navigate("/shop")}
+            >
+              Go to Access The Ledger
+            </button>
+          </div>
         </div>
       </div>
     </>
