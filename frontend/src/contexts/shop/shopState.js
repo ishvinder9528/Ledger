@@ -43,8 +43,9 @@ const ShopState = (props) => {
       });
       if (response.ok) {
         let data = await response.json();
-
+        console.log(data);
         setShops(shops.concat(data));
+        console.log(shops);
         showAlert("Shop Added Successfully!", "success");
       } else {
         showAlert("GST number already exists", "danger");
