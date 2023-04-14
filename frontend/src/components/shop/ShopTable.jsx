@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import ShopContext from "../contexts/shop/shopContext";
+import React, { useContext, useEffect, useCallback } from "react";
+import ShopContext from "../../contexts/shop/shopContext";
 import ShopTableData from "./ShopTableData";
 
 const ShopTable = (props) => {
@@ -7,13 +7,13 @@ const ShopTable = (props) => {
   const context = useContext(ShopContext);
   const { getShops, shops } = context;
 
-  useEffect(() => {
+  const memoizedGetShops = useCallback(() => {
     getShops();
-    console.log(shops);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getShops]);
 
-  console.log(shops);
+  useEffect(() => {
+    memoizedGetShops();
+  }, [memoizedGetShops]);
 
   return (
     <div className="container ">
@@ -39,16 +39,14 @@ const ShopTable = (props) => {
                   <td colSpan="5">No data found</td>
                 </tr>
               )
+            ) : shops.length > 0 ? (
+              shops.map((shop) => {
+                return <ShopTableData key={shop._id} shop={shop} />;
+              })
             ) : (
-              shops.length > 0 ? (
-                shops.map((shop) => {
-                  return <ShopTableData key={shop._id} shop={shop} />;
-                })
-              ) : (
-                <tr>
-                  <td colSpan="5">No data found</td>
-                </tr>
-              )
+              <tr>
+                <td colSpan="5">No data found</td>
+              </tr>
             )}
           </tbody>
         </table>

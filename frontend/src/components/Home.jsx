@@ -1,5 +1,5 @@
 import React from "react";
-import ShopTable from "./ShopTable";
+import ShopTable from "./shop/ShopTable";
 import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
