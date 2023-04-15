@@ -8,22 +8,26 @@ const ShopTable = (props) => {
   const { getShops, shops, loaded } = context;
   const location = useLocation();
   const [searchText, setSearchText] = useState("");
-  
+
   useEffect(() => {
-    console.log(loaded);
+    // console.log(loaded);
     if (!loaded) {
       getShops();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);
 
-    const filteredShops = loaded && shops 
-    ? shops.filter((shop) => {
-        // console.log(shop);
-        return shop.name && shop.name.toLowerCase().includes(searchText.toLowerCase());
-      })
-    : shops;
-  
+  const filteredShops =
+    loaded && shops
+      ? shops.filter((shop) => {
+          // console.log(shop);
+          return (
+            shop.name &&
+            shop.name.toLowerCase().includes(searchText.toLowerCase())
+          );
+        })
+      : shops;
+
   return (
     <div className="mx-1 table-responsive ">
       <section>
@@ -51,8 +55,8 @@ const ShopTable = (props) => {
             </div>
           </>
         )}
-        
-        <table className="table table-center table-sm">
+
+        <table className="table table-center ">
           <thead>
             <tr>
               <th scope="col" className="text-bg-warning">

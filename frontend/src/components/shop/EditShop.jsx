@@ -109,6 +109,8 @@ const EditShop = () => {
           </div>
         </span>
         <div className="mb-3" style={{ maxWidth: "20rem" }}>
+        <fieldset disabled>
+
           <label htmfor="pendingAmount" className="form-label">
             Pending Amount
           </label>
@@ -120,7 +122,8 @@ const EditShop = () => {
             aria-describedby="pendingAmount"
             value={editShopData.pendingAmount}
             onChange={onChange}
-          />
+            />
+            </fieldset>
         </div>
 
         <button type="submit" className="btn btn-success">
@@ -131,6 +134,16 @@ const EditShop = () => {
           style={{ color: "red" }}
           onClick={() => {
             deleteShop(editShopData._id);
+            setIsEdit({
+              value: false,
+              id: "",
+            });
+          }}
+        ></i>
+        <i
+          className="fa-solid fa-user-plus fa-2xl mx-3"
+          style={{ color: "orange" }}
+          onClick={() => {
             setIsEdit({
               value: false,
               id: "",

@@ -16,6 +16,7 @@ router.post("/add/:shopid", async (req, res) => {
       gst: req.body.gst,
       gramount: req.body.gramount,
       totalamount: req.body.totalamount,
+      status:req.body.status
     });
 
     // check Shop, it exists or not

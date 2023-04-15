@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import ShopContext from "../contexts/shop/shopContext";
+import BillContext from "../contexts/bill/billContext";
 
 const Alert = () => {
-  const { alert } = useContext(ShopContext);
-//   console.log(alert);
+  const { alert: shopAlert } = useContext(ShopContext);
+  const { alert: billAlert } = useContext(BillContext);
+  //   console.log(alert);
   const capitalize = (word) => {
     // console.log('word:', word); // add this line to see what the value of `word` is
     if (word === "danger") {
@@ -15,15 +17,17 @@ const Alert = () => {
 
   return (
     <div style={{ height: "50px" }}>
-      {alert && (
-        <>
-          <div
-            className={`alert alert-${alert.type} alert-dismissable fade show`}
-            role="alert"
-          >
-            <strong>{capitalize(alert.type)}</strong>: {alert.msg}
-          </div>
-        </>
+      {[shopAlert, billAlert].map(
+        (alert) =>
+          alert && (
+            <div
+              key={alert.msg}
+              className={`alert alert-${alert.type} alert-dismissable fade show`}
+              role="alert"
+            >
+              <strong>{capitalize(alert)}</strong>
+            </div>
+          )
       )}
     </div>
   );

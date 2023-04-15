@@ -17,7 +17,7 @@ const shopSchema = new Schema({
   },
   pendingAmount: {
     type: Number,
-    default: null,
+    default: 0,
   },
   phone:{
     type:Number,

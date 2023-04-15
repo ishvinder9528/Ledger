@@ -7,7 +7,7 @@ const AddShop = () => {
     gstno: "",
     location: "",
     phone: "",
-    pendingAmount: "",
+    pendingAmount: 0,
   });
   const context = useContext(ShopContext);
   const { addShop, getShops } = context;
@@ -19,7 +19,7 @@ const AddShop = () => {
       gstno: "",
       location: "",
       phone: "",
-      pendingAmount: "",
+      pendingAmount: 0,
     });
     getShops();
     getShops();
@@ -96,6 +96,8 @@ const AddShop = () => {
           </div>
         </span>
         <div className="mb-3" style={{ maxWidth: "20rem" }}>
+        <fieldset disabled>
+
           <label htmfor="pendingAmount" className="form-label">
             Pending Amount
           </label>
@@ -107,7 +109,8 @@ const AddShop = () => {
             aria-describedby="pendingAmount"
             value={shop.pendingAmount}
             onChange={onChange}
-          />
+            />
+            </fieldset>
         </div>
 
         <button type="submit" className="btn btn-warning">

@@ -7,6 +7,7 @@ const ShopState = (props) => {
   const [loaded, setLoaded] = useState(false);
   const [alert, setAlert] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [shopName, setShopName] = useState("");
   const [isEdit, setIsEdit] = useState({
     value: false,
     id: "",
@@ -16,7 +17,7 @@ const ShopState = (props) => {
     gstno: "",
     location: "",
     phone: "",
-    pendingAmount: "", 
+    pendingAmount: "",
   });
   const showAlert = (message, type) => {
     setAlert({
@@ -151,7 +152,9 @@ const ShopState = (props) => {
         editShopData,
         setEditShopData,
         showModal,
-        setShowModal
+        setShowModal,
+        shopName,
+        setShopName,
       }}
     >
       {props.children}
