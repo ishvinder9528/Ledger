@@ -16,8 +16,11 @@ const billSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Shop",
     },
+    shopname: {
+      type: String,
+    },
     status: {
-      type: "string",
+      type: String,
       default: "Paid",
     },
     cgst: {
@@ -26,11 +29,15 @@ const billSchema = new Schema(
     igst: {
       type: Number,
     },
-    gst: {
+    sgst: {
       type: Number,
     },
     gramount: {
       type: Number,
+    },
+    amount: {
+      type: Number,
+      required: true,
     },
     totalamount: {
       type: Number,
@@ -38,8 +45,12 @@ const billSchema = new Schema(
     },
     balanceleft: {
       type: Number,
-      default:0,
+      default: 0,
     },
+    date:{
+      type:Date,
+      required: true,
+    }
   },
   { timestamps: true }
 );

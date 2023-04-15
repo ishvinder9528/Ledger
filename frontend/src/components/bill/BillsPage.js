@@ -2,16 +2,15 @@ import React, { useContext } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import { useNavigate } from "react-router-dom";
 import Bills from "./Bills";
-import ShopContext from "../../contexts/shop/shopContext";
+import AddBillForm from "./AddBillForm";
 
 const BillsPage = () => {
   const context = useContext(BillContext);
-  const { billId, setLoaded,setBillId } = context;
-  const shopContext = useContext(ShopContext);
-  const {shopName} = shopContext;
+  const { shopId, setLoaded, setShopId, shopName } = context;
+
   const navigate = useNavigate();
 
-  console.log(billId);
+  console.log(shopId);
   return (
     <div className="mt-5">
       <div className="row my-4">
@@ -21,7 +20,7 @@ const BillsPage = () => {
             onClick={() => {
               navigate("/shop");
               setLoaded(false);
-              setBillId("");
+              setShopId("");
             }}
             style={{ cursor: "context-menu" }}
           >
@@ -42,7 +41,9 @@ const BillsPage = () => {
         <div className="col-md-8">
           <Bills />
         </div>
-        <div className="col-md-4"></div>
+        <div className="col-md-4">
+          <AddBillForm/>
+        </div>
       </div>
     </div>
   );

@@ -1,28 +1,33 @@
 import React, { useEffect, useState, useContext } from "react";
 import BillContext from "../../contexts/bill/billContext";
-import ShopContext from "../../contexts/shop/shopContext";
 const BillsTable = () => {
   const context = useContext(BillContext);
-  const { billId, getBill, billsData, loaded,deleteBill } = context;
+  const { shopId, getBill, billsData, loaded,deleteBill } = context;
   const [bills, setBills] = useState([]);
 
   useEffect(() => {
+    console.log(shopId);
     console.log(loaded);
     if (!loaded) {
-      getBill(billId);
+      getBill(shopId);
+  
       console.log(billsData);
     } else {
       setBills(billsData);
     }
+    console.log(bills);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded, getBill, billId, billsData]);
+  }, [loaded, getBill, shopId, billsData]);
   return (
-    <div>
-      <table class="table">
+    <div className=" table-responsive">
+      <table className="table">
         <thead>
           <tr>
             <th scope="col" className=" text-bg-warning">
               Bill ID
+            </th>
+            <th scope="col" className="text-bg-warning">
+                Shop Name
             </th>
             <th scope="col" className=" text-bg-warning">
               Bill No
@@ -40,6 +45,9 @@ const BillsTable = () => {
               GR Amount
             </th>
             <th scope="col" className=" text-bg-warning">
+              Amount
+            </th>
+            <th scope="col" className=" text-bg-warning">
               Total Amount
             </th>
             <th scope="col" className=" text-bg-warning">
@@ -51,7 +59,7 @@ const BillsTable = () => {
             <th scope="col" className=" text-bg-warning">
               Delete
             </th>
-            <th scope="col" className=" text-bg-warning">
+            <th scope="col" className="px-3 text-bg-warning ">
               Status
             </th>
             <th scope="col" className=" text-bg-warning">
@@ -66,11 +74,13 @@ const BillsTable = () => {
                 <>
                   <tr key={bill._id}>
                     <th scope="row">{bill.billid}</th>
+                    <th >{bill.shopname}</th>
                     <td>{bill.billno}</td>
                     <td>{bill.cgst}</td>
                     <td>{bill.igst}</td>
                     <td>{bill.gst}</td>
                     <td>{bill.gramount}</td>
+                    <td>{bill.amount}</td>
                     <td>{bill.totalamount}</td>
                     <td>{bill.balanceleft}</td>
                     <td>
@@ -86,7 +96,7 @@ const BillsTable = () => {
                       <i
                         className="fa-solid fa-trash-can fa-lg px-3"
                         style={{ color: "red" }}
-                        onClick={deleteBill(bill._id)}
+                        onClick={()=>deleteBill(shopId,bill._id)}
                       ></i>
                     </td>
                     <td

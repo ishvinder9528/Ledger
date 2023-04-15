@@ -25,7 +25,7 @@ const Alert = () => {
               className={`alert alert-${alert.type} alert-dismissable fade show`}
               role="alert"
             >
-              <strong>{capitalize(alert)}</strong>
+              <strong>{capitalize(alert.msg)}</strong>
             </div>
           )
       )}

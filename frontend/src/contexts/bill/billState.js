@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import BillContext from "./billContext";
 const BillState = (props) => {
-  const [billId, setBillId] = useState("");
-  const [billsData, setBillsData] = useState({});
+  const [shopId, setShopId] = useState("");
+  const [billsData, setBillsData] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [alert, setAlert] = useState(null);
+  const [shopName, setShopName] = useState("");
   const host = "http://localhost:5000";
   const showAlert = (message, type) => {
     setAlert({
@@ -24,8 +25,9 @@ const BillState = (props) => {
       });
       if (response.ok) {
         const data = await response.json();
+
         setBillsData(data.bills);
-        console.log(billsData);
+
         setLoaded(true);
       }
     } catch (error) {
@@ -49,19 +51,48 @@ const BillState = (props) => {
     }
   };
 
+  //   Add Bill to Shop
+  const addBill = async (shopid, bill) => {
+    try {
+      const response = await fetch(`${host}/bills/add/${shopid}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bill),
+      });
+      if (response.ok) {
+        const data = await response.json();
+
+        if (Array.isArray(billsData)) {
+            setBillsData(billsData.concat(data));
+          } else {
+            setBillsData([data]);
+          }
+        showAlert("Bill added Successfully", "success");
+      }
+    } catch (error) {
+      console.log(error);
+      showAlert("Opps, Something went wrong", "danger");
+    }
+  };
+
   return (
     <>
       <BillContext.Provider
         value={{
-          billId,
-          setBillId,
+          shopId,
+          setShopId,
           billsData,
           getBill,
           loaded,
           setLoaded,
           showAlert,
           alert,
-          deleteBill
+          deleteBill,
+          addBill,
+          shopName,
+          setShopName,
         }}
       >
         {props.children}

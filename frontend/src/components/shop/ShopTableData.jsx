@@ -8,8 +8,8 @@ const ShopTableData = (props) => {
   const location = useLocation();
   const context = useContext(ShopContext);
   const billContext = useContext(BillContext);
-  const { setBillId } = billContext;
-  const { deleteShop, setIsEdit, setShopName } = context;
+  const { setShopId, setShopName } = billContext;
+  const { deleteShop, setIsEdit } = context;
   const navigate = useNavigate();
 
   return (
@@ -48,8 +48,8 @@ const ShopTableData = (props) => {
                 style={{ color: "#0aea06" }}
                 onClick={() => {
                   navigate("/bill");
-                  setBillId(shop._id);
-                  setShopName(shop.name)
+                  setShopId(shop._id);
+                  setShopName(shop.name);
                 }}
               ></i>
             </td>

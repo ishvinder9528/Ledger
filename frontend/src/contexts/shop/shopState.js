@@ -8,6 +8,7 @@ const ShopState = (props) => {
   const [alert, setAlert] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [shopName, setShopName] = useState("");
+
   const [isEdit, setIsEdit] = useState({
     value: false,
     id: "",
@@ -32,7 +33,7 @@ const ShopState = (props) => {
   // GET all shops from backend
   const getShops = async () => {
     try {
-      console.log("it loads me");
+      // console.log("it loads me");
       const response = await fetch(`${host}/shops/allshops`, {
         method: "GET",
       });
@@ -155,6 +156,7 @@ const ShopState = (props) => {
         setShowModal,
         shopName,
         setShopName,
+     
       }}
     >
       {props.children}

@@ -8,15 +8,19 @@ const BillItem = require("../models/BillItem");
 router.post("/add/:shopid", async (req, res) => {
   try {
     const bill = new Bill({
+      shopname: req.body.shopname,
       billno: req.body.billno,
       billid: req.body.billid,
       shop: req.params.shopid,
       cgst: req.body.cgst,
       igst: req.body.igst,
-      gst: req.body.gst,
+      sgst: req.body.sgst,
+      amount:req.body.amount,
       gramount: req.body.gramount,
       totalamount: req.body.totalamount,
-      status:req.body.status
+      balanceleft:req.body.balanceleft,
+      status:req.body.status,
+      date:req.body.date
     });
 
     // check Shop, it exists or not
@@ -319,5 +323,29 @@ router.patch("/:shopid/:billid/edit/:billitemid", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+// Request 10: Get all the bills GET => http://localhost:5000/bills/allbills
+router.get('/allbills',async(req,res)=>{
+  try {
+    const bills = await Bill.aggregate([
+      {
+        $addFields: {
+          prefix: { $substr: ["$billid", 0, 2] }, // Get prefix from billid
+          numeric_number: { $toInt: { $substr: ["$billid", 2, -1] } } // Convert number to numeric type
+        }
+      },
+      { $sort: { prefix: -1, numeric_number: -1 } } // Sort by prefix in descending order and number in ascending order
+    ]);
+    console.log(bills);
+    if(bills.length===0){
+      console.log("No Bill Found");
+      return res.status(400).json({error:"No Bill Found"})
+    }
+    return res.json({bills})
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}) 
 
 module.exports = router;
