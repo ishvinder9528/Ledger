@@ -6,6 +6,7 @@ const BillState = (props) => {
   const [loaded, setLoaded] = useState(false);
   const [alert, setAlert] = useState(null);
   const [shopName, setShopName] = useState("");
+  const [isEdit, setIsEdit] = useState(false)
   const host = "http://localhost:5000";
   const showAlert = (message, type) => {
     setAlert({
@@ -30,6 +31,23 @@ const BillState = (props) => {
 
         setLoaded(true);
       }
+    } catch (error) {
+      showAlert("Opps, Something went wrong", "danger");
+    }
+  };
+
+  //get all bills
+  const getAll = async () => {
+    try {
+      const response = await fetch(`${host}/bills/allbills`, {
+        method: "GET",
+      });
+      if(response.ok) {
+        const data = await response.json();
+        setBillsData(data.bills);
+        setLoaded(true);
+      }
+
     } catch (error) {
       showAlert("Opps, Something went wrong", "danger");
     }
@@ -65,10 +83,10 @@ const BillState = (props) => {
         const data = await response.json();
 
         if (Array.isArray(billsData)) {
-            setBillsData(billsData.concat(data));
-          } else {
-            setBillsData([data]);
-          }
+          setBillsData(billsData.concat(data));
+        } else {
+          setBillsData([data]);
+        }
         showAlert("Bill added Successfully", "success");
       }
     } catch (error) {
@@ -76,6 +94,9 @@ const BillState = (props) => {
       showAlert("Opps, Something went wrong", "danger");
     }
   };
+
+//   Get the Particular Bill Data 
+
 
   return (
     <>
@@ -93,6 +114,7 @@ const BillState = (props) => {
           addBill,
           shopName,
           setShopName,
+          getAll
         }}
       >
         {props.children}

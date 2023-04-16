@@ -348,4 +348,7 @@ router.get('/allbills',async(req,res)=>{
   }
 }) 
 
+// Request 11: Get data of particular bill of particular shop
+request.get('/bills/:shopid/') 
+
 module.exports = router;
