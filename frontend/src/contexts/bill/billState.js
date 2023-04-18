@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BillContext from "./billContext";
 const BillState = (props) => {
   const [shopId, setShopId] = useState("");
@@ -6,7 +6,9 @@ const BillState = (props) => {
   const [loaded, setLoaded] = useState(false);
   const [alert, setAlert] = useState(null);
   const [shopName, setShopName] = useState("");
-  const [isEdit, setIsEdit] = useState(false)
+  const [isEdit, setIsEdit] = useState({ value: false, id: "" });
+  const [editBillData, setEditBillData] = useState({});
+  const [editBillLoaded,setEditBillLoaded]= useState(false);
   const host = "http://localhost:5000";
   const showAlert = (message, type) => {
     setAlert({
@@ -42,12 +44,11 @@ const BillState = (props) => {
       const response = await fetch(`${host}/bills/allbills`, {
         method: "GET",
       });
-      if(response.ok) {
+      if (response.ok) {
         const data = await response.json();
         setBillsData(data.bills);
         setLoaded(true);
       }
-
     } catch (error) {
       showAlert("Opps, Something went wrong", "danger");
     }
@@ -72,6 +73,7 @@ const BillState = (props) => {
   //   Add Bill to Shop
   const addBill = async (shopid, bill) => {
     try {
+      console.log(shopid);
       const response = await fetch(`${host}/bills/add/${shopid}`, {
         method: "POST",
         headers: {
@@ -79,6 +81,7 @@ const BillState = (props) => {
         },
         body: JSON.stringify(bill),
       });
+      console.log(response);
       if (response.ok) {
         const data = await response.json();
 
@@ -94,9 +97,37 @@ const BillState = (props) => {
       showAlert("Opps, Something went wrong", "danger");
     }
   };
-
-//   Get the Particular Bill Data 
-
+  function dateIsValid(date) {
+    return !Number.isNaN(new Date(date).getTime());
+  }
+  //   Get the Particular Bill Data
+  const getBillData = async (shopid, billid) => {
+    try {
+      const response = await fetch(`${host}/bills/${shopid}/bill/${billid}`, {
+        method: "GET",
+      });
+      console.log(response);
+      if (response.ok) {
+        const data = await response.json();
+        const formattedDate = new Date(data.bill.date);
+        console.log(dateIsValid(formattedDate));
+        console.log(formattedDate);
+        setEditBillData({
+          ...editBillData,
+          ...data.bill,
+        });
+        if(editBillData.length!==0){
+          setEditBillLoaded(true)
+          showAlert("Bill Data Loaded to Form", "success")
+        }
+      } else {
+        showAlert("Opps, Something went wrong", "danger");
+      }
+    } catch (error) {
+      console.log(error);
+      showAlert("Opps, Something went wrong", "danger");
+    }
+  };
 
   return (
     <>
@@ -114,7 +145,14 @@ const BillState = (props) => {
           addBill,
           shopName,
           setShopName,
-          getAll
+          getAll,
+          isEdit,
+          setIsEdit,
+          editBillData,
+          setEditBillData,
+          getBillData,
+          setEditBillLoaded,
+          editBillLoaded
         }}
       >
         {props.children}

@@ -33,7 +33,7 @@ const AllBills = () => {
   return (
     <div>
       {" "}
-      <div className=" table-responsive">
+      <div className=" table-responsive mx-5">
         <div className="row my-5">
           <div className="col-md-3">
             <button

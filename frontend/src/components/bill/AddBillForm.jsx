@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import BillContext from "../../contexts/bill/billContext";
+import ReactDatePicker from "react-datepicker";
 
-const AddBillForm = (props) => {
+const AddBillForm = () => {
   const context = useContext(BillContext);
-  const { shopId, addBill, shopName,getBill } = context;
+  const { shopId, addBill, shopName, getBill } = context;
   const [newBill, setNewBill] = useState({
     shopname: shopName,
     billid: "A-",
@@ -16,10 +17,13 @@ const AddBillForm = (props) => {
     amount: 0,
     totalamount: 0,
     status: "Paid",
+    date: new Date(),
   });
 
   useEffect(() => {
     console.log(shopName);
+    console.log(shopId);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -95,12 +99,16 @@ const AddBillForm = (props) => {
       });
     }
   };
-
+  const handleDateChange = (date) => {
+    setNewBill({
+      ...newBill,
+      date: date,
+    });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(shopName);
-    console.log(shopId);
     console.log(newBill);
+    console.log("shop id", shopId);
     addBill(shopId, newBill);
     setNewBill({
       shopname: shopName,
@@ -114,11 +122,11 @@ const AddBillForm = (props) => {
       amount: 0,
       totalamount: 0,
       status: "Paid",
+      date: new Date(),
     });
-    getBill(shopId)
-    getBill(shopId)
-    getBill(shopId)
-    getBill(shopId)
+    getBill(shopId);
+    getBill(shopId);
+    getBill(shopId);
   };
 
   return (
@@ -126,15 +134,15 @@ const AddBillForm = (props) => {
       <div className="p-4">
         <h2 className=" text-center text-warning mb-4">Add Bill</h2>
         <form onSubmit={handleSubmit}>
-          <div class="mb-3 ">
+          <div className="mb-3 ">
             <div className="row">
               <div className="col-6">
-                <label for="billid" class="form-label">
+                <label htmlhtmlfor="billid" className="form-label">
                   Bill ID
                 </label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   id="billid"
                   name="billid"
                   value={newBill.billid}
@@ -144,13 +152,13 @@ const AddBillForm = (props) => {
                 />
               </div>
               <div className="col-6">
-                <div class="mb-3 ">
-                  <label for="billno" class="form-label">
+                <div className="mb-3 ">
+                  <label htmlhtmlfor="billno" className="form-label">
                     Bill No
                   </label>
                   <input
                     type="number"
-                    class="form-control"
+                    className="form-control"
                     id="billno"
                     name="billno"
                     value={newBill.billno}
@@ -163,13 +171,13 @@ const AddBillForm = (props) => {
           </div>
           <div className="row">
             <div className="col-4">
-              <div class="mb-3 ">
-                <label for="cgst" class="form-label">
+              <div className="mb-3 ">
+                <label htmlhtmlfor="cgst" className="form-label">
                   CGST
                 </label>
                 <input
                   type="number"
-                  class="form-control"
+                  className="form-control"
                   id="cgst"
                   name="cgst"
                   value={newBill.cgst}
@@ -180,14 +188,14 @@ const AddBillForm = (props) => {
             </div>
 
             <div className="col-4">
-              <div class="mb-3 ">
+              <div className="mb-3 ">
                 <fieldset disabled>
-                  <label for="sgst" class="form-label">
+                  <label htmlhtmlfor="sgst" className="form-label">
                     SGST
                   </label>
                   <input
                     type="number"
-                    class="form-control"
+                    className="form-control"
                     id="sgst"
                     name="sgst"
                     value={newBill.sgst}
@@ -198,13 +206,13 @@ const AddBillForm = (props) => {
               </div>
             </div>
             <div className="col-4">
-              <div class="mb-3 ">
-                <label for="igst" class="form-label">
+              <div className="mb-3 ">
+                <label htmlhtmlfor="igst" className="form-label">
                   IGST
                 </label>
                 <input
                   type="number"
-                  class="form-control"
+                  className="form-control"
                   id="igst"
                   name="igst"
                   value={newBill.igst}
@@ -216,13 +224,13 @@ const AddBillForm = (props) => {
           </div>
           <div className="row">
             <div className="col-6">
-              <div class="mb-3 ">
-                <label for="gramount" class="form-label">
+              <div className="mb-3 ">
+                <label htmlhtmlfor="gramount" className="form-label">
                   GR Amount
                 </label>
                 <input
                   type="number"
-                  class="form-control"
+                  className="form-control"
                   id="gramount"
                   name="gramount"
                   value={newBill.gramount}
@@ -232,13 +240,13 @@ const AddBillForm = (props) => {
               </div>
             </div>
             <div className="col-6">
-              <div class="mb-3 ">
-                <label for="balanceleft" class="form-label">
+              <div className="mb-3 ">
+                <label htmlhtmlfor="balanceleft" className="form-label">
                   Pending Amount
                 </label>
                 <input
                   type="number"
-                  class="form-control"
+                  className="form-control"
                   id="balanceleft"
                   name="balanceleft"
                   value={newBill.balanceleft}
@@ -250,28 +258,27 @@ const AddBillForm = (props) => {
           </div>
           <div className="row">
             <div className="col-6">
-              <div class="mb-3 ">
-                <label for="amount" class="form-label">
-                  Amount
+              <div className="mb-3">
+                <label htmlhtmlfor="date" className="form-label">
+                  Date
                 </label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="amount"
-                  name="amount"
-                  value={newBill.amount}
-                  aria-describedby="amount"
-                  onChange={onChange}
+                <ReactDatePicker
+                  type="date"
+                  className="form-control"
+                  selected={newBill.date}
+                  dateFormat="dd/MM/yyyy"
+                  name="date"
+                  onChange={handleDateChange}
                 />
               </div>
             </div>
             <div className="col-6">
-              <div class="mb-3 ">
-                <label for="status" class="form-label">
+              <div className="mb-3 ">
+                <label htmlhtmlfor="status" className="form-label">
                   Status
                 </label>
                 <select
-                  class="form-select"
+                  className="form-select"
                   value={newBill.status}
                   name="status"
                   onChange={onChange}
@@ -284,14 +291,30 @@ const AddBillForm = (props) => {
           </div>
           <div className="row">
             <div className="col-6">
-              <div class="mb-3 ">
+              <div className="mb-3 ">
+                <label htmlhtmlfor="amount" className="form-label">
+                  Amount
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="amount"
+                  name="amount"
+                  value={newBill.amount}
+                  aria-describedby="amount"
+                  onChange={onChange}
+                />
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="mb-3 ">
                 <fieldset disabled>
-                  <label for="totalamount" class="form-label">
+                  <label htmlhtmlfor="totalamount" className="form-label">
                     Total Amount
                   </label>
                   <input
                     type="number"
-                    class="form-control"
+                    className="form-control"
                     id="totalamount"
                     name="totalamount"
                     value={newBill.totalamount}
@@ -302,7 +325,7 @@ const AddBillForm = (props) => {
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-warning">
+          <button type="submit" className="btn btn-warning">
             Add Bill
           </button>
         </form>

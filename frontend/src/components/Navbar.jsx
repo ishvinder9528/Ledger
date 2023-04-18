@@ -1,18 +1,20 @@
 import React, { useContext } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import ShopContext from "../contexts/shop/shopContext";
+import BillContext from "../contexts/bill/billContext";
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const context = useContext(ShopContext);
   const { isEdit, setIsEdit } = context;
-
+  const billContext = useContext(BillContext);
+  const { setShopId,shopId } = billContext;
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate("/shop");
   };
-
+  // console.log(shopId);
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -43,8 +45,13 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/Shop">
+                <Link className="nav-link" to="/shop" onClick={()=>setShopId("")}>
                   Shop
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/all" onClick={()=>setShopId("")}>
+                  All Bills
                 </Link>
               </li>
             </ul>

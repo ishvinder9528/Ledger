@@ -1,16 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import { useNavigate } from "react-router-dom";
 import Bills from "./Bills";
 import AddBillForm from "./AddBillForm";
+import EditBillForm from "./EditBillFrom";
 
 const BillsPage = () => {
   const context = useContext(BillContext);
-  const { shopId, setLoaded, setShopId, shopName } = context;
-
+  const { setLoaded, shopName, isEdit, setIsEdit, setEditBillData } =
+    context;
+  useEffect(() => {
+    console.log(isEdit);
+  }, [isEdit]);
   const navigate = useNavigate();
-
-  console.log(shopId);
   return (
     <div className="mt-5">
       <div className="row my-4">
@@ -20,7 +22,11 @@ const BillsPage = () => {
             onClick={() => {
               navigate("/shop");
               setLoaded(false);
-              setShopId("");
+              setIsEdit({
+                value: false,
+                id: "",
+              });
+              setEditBillData({});
             }}
             style={{ cursor: "context-menu" }}
           >
@@ -41,9 +47,15 @@ const BillsPage = () => {
         <div className="col-md-8">
           <Bills />
         </div>
-        <div className="col-md-4">
-          <AddBillForm/>
-        </div>
+        {!isEdit.value ? (
+          <div className="col-md-4">
+            <AddBillForm />
+          </div>
+        ) : (
+          <div className="col-md-4">
+            <EditBillForm />
+          </div>
+        )}
       </div>
     </div>
   );
