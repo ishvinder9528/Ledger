@@ -8,7 +8,9 @@ const BillState = (props) => {
   const [shopName, setShopName] = useState("");
   const [isEdit, setIsEdit] = useState({ value: false, id: "" });
   const [editBillData, setEditBillData] = useState({});
-  const [editBillLoaded,setEditBillLoaded]= useState(false);
+  const [editBillLoaded, setEditBillLoaded] = useState(false);
+  const [billId, setBillId] = useState("");
+  const [bill_Id, setBill_Id] = useState("");
   const host = "http://localhost:5000";
   const showAlert = (message, type) => {
     setAlert({
@@ -116,9 +118,9 @@ const BillState = (props) => {
           ...editBillData,
           ...data.bill,
         });
-        if(editBillData.length!==0){
-          setEditBillLoaded(true)
-          showAlert("Bill Data Loaded to Form", "success")
+        if (editBillData.length !== 0) {
+          setEditBillLoaded(true);
+          showAlert("Bill Data Loaded to Form", "success");
         }
       } else {
         showAlert("Opps, Something went wrong", "danger");
@@ -152,7 +154,11 @@ const BillState = (props) => {
           setEditBillData,
           getBillData,
           setEditBillLoaded,
-          editBillLoaded
+          editBillLoaded,
+          billId,
+          setBillId,
+          setBill_Id,
+          bill_Id,
         }}
       >
         {props.children}

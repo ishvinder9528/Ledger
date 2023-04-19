@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import ReactDatePicker from "react-datepicker";
 
+
 const EditBillForm = () => {
   const context = useContext(BillContext);
   const {
     shopId,
-    addBill,
     shopName,
     getBill,
     editBillData,
@@ -54,7 +54,7 @@ const EditBillForm = () => {
         parseFloat(value) +
         parseFloat(editBill.amount) -
         parseFloat(editBill.gramount);
-      setEditBillData({
+        setEditBill({
         ...editBill,
         sgst: value,
         cgst: value,
@@ -67,7 +67,7 @@ const EditBillForm = () => {
         parseFloat(editBill.sgst) +
         parseFloat(editBill.amount) -
         parseFloat(editBill.gramount);
-      setEditBillData({
+        setEditBill({
         ...editBill,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
@@ -79,7 +79,7 @@ const EditBillForm = () => {
         parseFloat(value) +
         parseFloat(editBill.amount) -
         parseFloat(editBill.gramount);
-      setEditBillData({
+        setEditBill({
         ...editBill,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
@@ -91,7 +91,7 @@ const EditBillForm = () => {
         parseFloat(editBill.sgst) +
         parseFloat(value) -
         parseFloat(editBill.gramount);
-      setEditBillData({
+        setEditBill({
         ...editBill,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
@@ -103,20 +103,20 @@ const EditBillForm = () => {
         parseFloat(editBill.sgst) +
         parseFloat(editBill.amount) -
         parseFloat(value);
-      setEditBillData({
+        setEditBill({
         ...editBill,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
       });
     } else {
-      setEditBillData({
+      setEditBill({
         ...editBill,
         [name]: value,
       });
     }
   };
   const handleDateChange = (date) => {
-    setEditBillData({
+    setEditBill({
       ...editBill,
       date: date,
     });
@@ -126,8 +126,7 @@ const EditBillForm = () => {
     console.log(shopName);
     console.log(shopId);
     console.log(editBill);
-    addBill(shopId, editBill);
-    setEditBillData({
+    setEditBill({
       shopname: shopName,
       billid: "A-",
       billno: "",
@@ -143,8 +142,8 @@ const EditBillForm = () => {
     });
     getBill(shopId);
     getBill(shopId);
-    getBill(shopId);
-    getBill(shopId);
+    setEditBillData({})
+    
   };
 
   return (
@@ -348,6 +347,7 @@ const EditBillForm = () => {
           </button>
         </form>
       </div>
+      
     </div>
   );
 };

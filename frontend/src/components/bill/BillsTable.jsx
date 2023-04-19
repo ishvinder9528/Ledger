@@ -1,9 +1,21 @@
 import React, { useEffect, useState, useContext } from "react";
 import BillContext from "../../contexts/bill/billContext";
+import BillItemModal from "../billItem/BillItemModal";
 const BillsTable = () => {
   const context = useContext(BillContext);
-  const { shopId, getBill, billsData, loaded, deleteBill, setIsEdit } = context;
+  const {
+    shopId,
+    getBill,
+    billsData,
+    loaded,
+    deleteBill,
+    setIsEdit,
+    setBillId,
+    setBill_Id,
+  } = context;
   const [bills, setBills] = useState([]);
+  const showBillItemModal = useState(null);
+  const closeBillItemModal = useState(null);
 
   useEffect(() => {
     if (!loaded) {
@@ -116,6 +128,11 @@ const BillsTable = () => {
                     <i
                       className="fa-solid fa-hand-pointer fa-lg px-2"
                       style={{ color: "#0aea06" }}
+                      onClick={() => {
+                        showBillItemModal.current.click();
+                        setBillId(bill.billid);
+                        setBill_Id(bill._id);
+                      }}
                     ></i>
                   </td>
                 </tr>
@@ -128,6 +145,10 @@ const BillsTable = () => {
           )}
         </tbody>
       </table>
+      <BillItemModal
+        showBillItemModal={showBillItemModal}
+        closeBillItemModal={closeBillItemModal}
+      />
     </div>
   );
 };
