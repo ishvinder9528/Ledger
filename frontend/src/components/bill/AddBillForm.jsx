@@ -127,6 +127,8 @@ const AddBillForm = () => {
     getBill(shopId);
     getBill(shopId);
     getBill(shopId);
+    getBill(shopId);
+    getBill(shopId);
   };
 
   return (

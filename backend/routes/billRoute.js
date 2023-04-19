@@ -333,15 +333,16 @@ router.patch("/:shopid/:billid/edit/:billitemid", async (req, res) => {
 // Request 10: Get all the bills GET => http://localhost:5000/bills/allbills
 router.get("/allbills", async (req, res) => {
   try {
-    const bills = await Bill.aggregate([
-      {
-        $addFields: {
-          prefix: { $substr: ["$billid", 0, 2] }, // Get prefix from billid
-          numeric_number: { $toInt: { $substr: ["$billid", 2, -1] } }, // Convert number to numeric type
-        },
-      },
-      { $sort: { prefix: -1, numeric_number: -1 } }, // Sort by prefix in descending order and number in ascending order
-    ]);
+    // const bills = await Bill.aggregate([
+    //   {
+    //     $addFields: {
+    //       prefix: { $substr: ["$billid", 0, 2] }, // Get prefix from billid
+    //       numeric_number: { $toInt: { $substr: ["$billid", 2, -1] } }, // Convert number to numeric type
+    //     },
+    //   },
+    //   { $sort: { prefix: -1, numeric_number: -1 } }, // Sort by prefix in descending order and number in ascending order
+    // ])
+    const bills = await Bill.find();
     console.log(bills);
     if (bills.length === 0) {
       console.log("No Bill Found");
@@ -372,8 +373,7 @@ router.get("/:shopid/bill/:billid", async (req, res) => {
       return res.json({ error: "Bills Not Found" });
     }
 
-      res.status(200).json({bill})
-
+    res.status(200).json({ bill });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
