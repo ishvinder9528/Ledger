@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import AddBillItemForm from "./AddBillItemForm";
 import BillItemTable from "./BillItemTable";
@@ -6,7 +6,25 @@ import BillItemTable from "./BillItemTable";
 const BillItemModal = (props) => {
   const [isAdd, setIsAdd] = useState(false);
   const context = useContext(BillContext);
-  const { shopName, billId } = context;
+  const {
+    shopName,
+    billId,
+
+    billItemLoaded,
+    shopId,
+    bill_Id,
+    getBillItems,
+    setBillItemLoaded,
+  } = context;
+
+  useEffect(() => {
+    getBillItems(shopId, bill_Id);
+    getBillItems(shopId, bill_Id);
+    if (billItemLoaded) {
+      setBillItemLoaded(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bill_Id, billItemLoaded]);
   return (
     <div>
       {/* <!-- Button trigger modal --> */}
@@ -30,7 +48,7 @@ const BillItemModal = (props) => {
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-scrollable modal-lg">
+        <div className="modal-dialog modal-dialog-scrollable modal-xl">
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="staticBackdropLabel">
@@ -44,7 +62,7 @@ const BillItemModal = (props) => {
               ></button>
             </div>
             <div className="modal-body">
-              <BillItemTable/>
+              <BillItemTable />
               <div
                 className="btn btn-warning"
                 onClick={() => {
@@ -55,7 +73,7 @@ const BillItemModal = (props) => {
               </div>
               {isAdd && <AddBillItemForm setIsAdd={setIsAdd} />}
             </div>
-            <div className="modal-footer">
+            <div className="modal-footer mt-4">
               <button
                 type="button"
                 className="btn btn-secondary"

@@ -57,25 +57,23 @@ router.post("/:shopid/add/:billid", async (req, res) => {
       return res.json({ error: "Bills Not Found" });
     }
 
-    const billItems = req.body;
-    const addedBillItems = [];
+    const billItem = new BillItem({
+      sno: req.body.sno,
+      qty: req.body.qty,
+      itemdesc: req.body.itemdesc,
+      price: req.body.price,
+      amount: req.body.amount,
+      discount: req.body.discount,
+      netamount: req.body.netamount,
 
-    for (const billItem of billItems) {
-      const newBillItem = new BillItem({
-        qty: billItem.qty,
-        itemdesc: billItem.itemdesc,
-        price: billItem.price,
-        amount: billItem.amount,
+      billid: req.params.billid,
+    });
 
-        billid: req.params.billid,
-      });
+    const savedBillItem = await billItem.save();
 
-      const savedBillItem = await newBillItem.save();
-      addedBillItems.push(savedBillItem);
-    }
-    if (addedBillItems) {
-      console.log("Add BillItem Successfully", addedBillItems);
-      res.status(200).json({ message: "Add Successfully", addedBillItems });
+    if (savedBillItem) {
+      console.log("Add BillItem Successfully", savedBillItem);
+      res.status(200).json({ message: "Add Successfully", savedBillItem });
     } else {
       throw new Error("Unable to add BillItem");
     }
@@ -264,11 +262,31 @@ router.patch("/:shopid/edit/:billid", async (req, res) => {
       return res.json({ error: "Bills Not Found" });
     }
 
-    const { billno, billid, status } = req.body;
+    const {
+      billno,
+      billid,
+      status,
+      sgst,
+      cgst,
+      igst,
+      gramount,
+      date,
+      amount,
+      totalamount,
+      balanceleft,
+    } = req.body;
     const newBill = {};
     if (billno) newBill.billno = billno;
     if (billid) newBill.billid = billid;
     if (status) newBill.status = status;
+    if (sgst) newBill.sgst = sgst;
+    if (cgst) newBill.cgst = cgst;
+    if (igst) newBill.igst = igst;
+    if (gramount) newBill.gramount = gramount;
+    if (date) newBill.date = date;
+    if (amount) newBill.amount = amount;
+    if (totalamount) newBill.totalamount = totalamount;
+    if (balanceleft) newBill.balanceleft = balanceleft;
 
     const newData = await Bill.findByIdAndUpdate(
       req.params.billid,

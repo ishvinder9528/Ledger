@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import BillContext from "./billContext";
 const BillState = (props) => {
   const [shopId, setShopId] = useState("");
@@ -8,9 +8,10 @@ const BillState = (props) => {
   const [shopName, setShopName] = useState("");
   const [isEdit, setIsEdit] = useState({ value: false, id: "" });
   const [editBillData, setEditBillData] = useState({});
-  const [editBillLoaded, setEditBillLoaded] = useState(false);
   const [billId, setBillId] = useState("");
   const [bill_Id, setBill_Id] = useState("");
+  const [billItems, setBillItems] = useState([]);
+  const [billItemLoaded, setBillItemLoaded] = useState(false);
   const host = "http://localhost:5000";
   const showAlert = (message, type) => {
     setAlert({
@@ -102,6 +103,7 @@ const BillState = (props) => {
   function dateIsValid(date) {
     return !Number.isNaN(new Date(date).getTime());
   }
+
   //   Get the Particular Bill Data
   const getBillData = async (shopid, billid) => {
     try {
@@ -115,15 +117,92 @@ const BillState = (props) => {
         console.log(dateIsValid(formattedDate));
         console.log(formattedDate);
         setEditBillData({
-          ...editBillData,
           ...data.bill,
         });
         if (editBillData.length !== 0) {
-          setEditBillLoaded(true);
           showAlert("Bill Data Loaded to Form", "success");
         }
       } else {
         showAlert("Opps, Something went wrong", "danger");
+      }
+    } catch (error) {
+      console.log(error);
+      showAlert("Opps, Something went wrong", "danger");
+    }
+  };
+
+  // edit the bill details
+  const editBill = async (shopid, billid, bill) => {
+    try {
+      const response = await fetch(`${host}/bills/${shopid}/edit/${billid}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bill),
+      });
+      console.log(response);
+      if (response.ok) {
+        const bills = JSON.parse(JSON.stringify(billsData));
+        for (let index = 0; index < bills.length; index++) {
+          const element = bills[index];
+          if (element._id === billid) {
+            bills[index] = bill;
+            break;
+          }
+        }
+        setBillsData(bills);
+        showAlert("Bill Updated Successfully", "success");
+      }
+    } catch (error) {
+      console.log(error);
+      showAlert("Opps, Something went wrong", "danger");
+    }
+  };
+
+  // Get all BillItems from Particular Bill
+  const getBillItems = async (shopid, billid) => {
+    try {
+      const response = await fetch(
+        `${host}/bills/${shopid}/billitems/${billid}`,
+        {
+          method: "GET",
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.billItems);
+        setBillItems(data.billItems);
+        setBillItemLoaded(true);
+      }
+    } catch (error) {
+      console.log(error);
+      showAlert("Opps, Something went wrong", "danger");
+    }
+  };
+
+  // Add billitems to the particular bill of particular shop
+  const addBillItem = async (shopid, billid, data) => {
+    try {
+      const response = await fetch(`${host}/bills/${shopid}/add/${billid}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      console.log("response=>", response);
+      console.log("data=>", data);
+      if (response.ok) {
+        const billitem = await response.json();
+
+        if (Array.isArray(billItems)) {
+          setBillItems(billItems.concat(billitem));
+        } else {
+          setBillItems([billitem]);
+        }
+        showAlert("Bill added Successfully", "success");
+      } else {
       }
     } catch (error) {
       console.log(error);
@@ -153,12 +232,17 @@ const BillState = (props) => {
           editBillData,
           setEditBillData,
           getBillData,
-          setEditBillLoaded,
-          editBillLoaded,
           billId,
           setBillId,
           setBill_Id,
           bill_Id,
+          billItems,
+          setBillItems,
+          getBillItems,
+          setBillItemLoaded,
+          billItemLoaded,
+          editBill,
+          addBillItem,
         }}
       >
         {props.children}

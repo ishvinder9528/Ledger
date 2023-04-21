@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import BillContext from "../../contexts/bill/billContext";
 
 const BillItemTable = () => {
+  const context = useContext(BillContext);
+  const { billItems } = context;
+
   return (
-    <div>
-      <table className="table">
+    <div className="table-responsive">
+      <table className="table ">
         <thead>
           <tr>
+            <th scope="col" className=" text-bg-warning">
+              Sno.
+            </th>
             <th scope="col" className=" text-bg-warning">
               Qty
             </th>
@@ -14,6 +21,12 @@ const BillItemTable = () => {
             </th>
             <th scope="col" className=" text-bg-warning">
               Amount
+            </th>
+            <th scope="col" className=" text-bg-warning">
+              Discount in %
+            </th>
+            <th scope="col" className=" text-bg-warning">
+              Net Amount
             </th>
             <th scope="col" className=" text-bg-warning">
               Item Desc.
@@ -27,27 +40,40 @@ const BillItemTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>
-              <i
-                className="fa-solid fa-pen-to-square fa-lg"
-                style={{ color: "orange" }}
-              ></i>
-            </td>
-            <td>
-              <i
-                className="fa-solid fa-trash-can fa-lg"
-                style={{ color: "red" }}
-              ></i>
-            </td>
-          </tr>
+          {billItems && billItems.length !== 0 ? (
+            billItems.map((billItem) => {
+              return (
+                <tr key={billItem._id}>
+                  <td>{billItem.sno}</td>
+                  <td>{billItem.qty}</td>
+                  <td>{billItem.price}</td>
+                  <td>{billItem.amount}</td>
+                  <td>{billItem.discount}</td>
+                  <td>{billItem.netamount}</td>
+                  <td>{billItem.itemdesc}</td>
+                  <td>
+                    <i
+                      className="fa-solid fa-pen-to-square fa-lg"
+                      style={{ color: "orange" }}
+                    ></i>
+                  </td>
+                  <td>
+                    <i
+                      className="fa-solid fa-trash-can fa-lg"
+                      style={{ color: "red" }}
+                    ></i>
+                  </td>
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
+              <td colSpan={6}>No Data Found</td>
+            </tr>
+          )}
         </tbody>
         <tr className="my-2">
-          <th colSpan={6} className=" text-end fs-4">
+          <th colSpan={6} className="  fs-4">
             {" "}
             Total Amount ={" "}
           </th>

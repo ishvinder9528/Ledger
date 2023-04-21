@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, createRef } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import BillItemModal from "../billItem/BillItemModal";
 const BillsTable = () => {
@@ -14,8 +14,8 @@ const BillsTable = () => {
     setBill_Id,
   } = context;
   const [bills, setBills] = useState([]);
-  const showBillItemModal = useState(null);
-  const closeBillItemModal = useState(null);
+  const showBillItemModal = createRef(null);
+  const closeBillItemModal = createRef(null);
 
   useEffect(() => {
     if (!loaded) {

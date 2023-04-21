@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import ReactDatePicker from "react-datepicker";
-
 
 const EditBillForm = () => {
   const context = useContext(BillContext);
@@ -13,35 +12,30 @@ const EditBillForm = () => {
     setEditBillData,
     getBillData,
     isEdit,
-    setEditBillLoaded,
-    editBillLoaded,
+    editBill,
+    setIsEdit,
   } = context;
-  const [editBill, setEditBill] = useState({
-    shopname: shopName,
-    billid: "A-",
-    billno: "",
-    cgst: 0,
-    sgst: 0,
-    igst: 0,
-    gramount: 0,
-    balanceleft: 0,
-    amount: 0,
-    totalamount: 0,
-    status: "Paid",
-    date: new Date(),
-  });
 
   useEffect(() => {
     console.log(shopName);
+    setEditBillData({
+      shopname: shopName,
+      billid: "A-",
+      billno: "",
+      cgst: 0,
+      sgst: 0,
+      igst: 0,
+      gramount: 0,
+      balanceleft: 0,
+      amount: 0,
+      totalamount: 0,
+      status: "Paid",
+      date: new Date(),
+    });
     getBillData(shopId, isEdit.id);
     console.log("data - ", editBillData);
-    if (editBillData.length !== 0) {
-      setEditBill(editBillData);
-      setEditBillLoaded(false);
-    }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEdit.id, editBillLoaded]);
+  }, [isEdit.id]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -50,74 +44,74 @@ const EditBillForm = () => {
     if (name === "cgst") {
       totalAmount =
         parseFloat(value) +
-        parseFloat(editBill.igst) +
+        parseFloat(editBillData.igst) +
         parseFloat(value) +
-        parseFloat(editBill.amount) -
-        parseFloat(editBill.gramount);
-        setEditBill({
-        ...editBill,
+        parseFloat(editBillData.amount) -
+        parseFloat(editBillData.gramount);
+      setEditBillData({
+        ...editBillData,
         sgst: value,
         cgst: value,
         totalamount: totalAmount.toFixed(2),
       });
     } else if (name === "igst") {
       totalAmount =
-        parseFloat(editBill.cgst) +
+        parseFloat(editBillData.cgst) +
         parseFloat(value) +
-        parseFloat(editBill.sgst) +
-        parseFloat(editBill.amount) -
-        parseFloat(editBill.gramount);
-        setEditBill({
-        ...editBill,
+        parseFloat(editBillData.sgst) +
+        parseFloat(editBillData.amount) -
+        parseFloat(editBillData.gramount);
+      setEditBillData({
+        ...editBillData,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
       });
     } else if (name === "sgst") {
       totalAmount =
-        parseFloat(editBill.cgst) +
-        parseFloat(editBill.igst) +
+        parseFloat(editBillData.cgst) +
+        parseFloat(editBillData.igst) +
         parseFloat(value) +
-        parseFloat(editBill.amount) -
-        parseFloat(editBill.gramount);
-        setEditBill({
-        ...editBill,
+        parseFloat(editBillData.amount) -
+        parseFloat(editBillData.gramount);
+      setEditBillData({
+        ...editBillData,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
       });
     } else if (name === "amount") {
       totalAmount =
-        parseFloat(editBill.cgst) +
-        parseFloat(editBill.igst) +
-        parseFloat(editBill.sgst) +
+        parseFloat(editBillData.cgst) +
+        parseFloat(editBillData.igst) +
+        parseFloat(editBillData.sgst) +
         parseFloat(value) -
-        parseFloat(editBill.gramount);
-        setEditBill({
-        ...editBill,
+        parseFloat(editBillData.gramount);
+      setEditBillData({
+        ...editBillData,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
       });
     } else if (name === "gramount") {
       totalAmount =
-        parseFloat(editBill.cgst) +
-        parseFloat(editBill.igst) +
-        parseFloat(editBill.sgst) +
-        parseFloat(editBill.amount) -
+        parseFloat(editBillData.cgst) +
+        parseFloat(editBillData.igst) +
+        parseFloat(editBillData.sgst) +
+        parseFloat(editBillData.amount) -
         parseFloat(value);
-        setEditBill({
-        ...editBill,
+      setEditBillData({
+        ...editBillData,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
       });
     } else {
-      setEditBill({
-        ...editBill,
+      setEditBillData({
+        ...editBillData,
         [name]: value,
       });
     }
   };
   const handleDateChange = (date) => {
-    setEditBill({
-      ...editBill,
+    setEditBillData({
+      ...editBillData,
       date: date,
     });
   };
@@ -125,8 +119,9 @@ const EditBillForm = () => {
     e.preventDefault();
     console.log(shopName);
     console.log(shopId);
-    console.log(editBill);
-    setEditBill({
+    console.log(editBillData);
+    editBill(shopId, isEdit.id, editBillData);
+    setEditBillData({
       shopname: shopName,
       billid: "A-",
       billno: "",
@@ -142,8 +137,26 @@ const EditBillForm = () => {
     });
     getBill(shopId);
     getBill(shopId);
-    setEditBillData({})
-    
+    getBill(shopId);
+    getBill(shopId);
+    setEditBillData({
+      shopname: shopName,
+      billid: "A-",
+      billno: "",
+      cgst: 0,
+      sgst: 0,
+      igst: 0,
+      gramount: 0,
+      balanceleft: 0,
+      amount: 0,
+      totalamount: 0,
+      status: "Paid",
+      date: new Date(),
+    });
+    setIsEdit({
+      value:false,
+      id:''
+    });
   };
 
   return (
@@ -162,7 +175,7 @@ const EditBillForm = () => {
                   className="form-control"
                   id="billid"
                   name="billid"
-                  value={editBill.billid}
+                  value={editBillData.billid}
                   aria-describedby="billid"
                   placeholder="A-id"
                   onChange={onChange}
@@ -178,7 +191,7 @@ const EditBillForm = () => {
                     className="form-control"
                     id="billno"
                     name="billno"
-                    value={editBill.billno}
+                    value={editBillData.billno}
                     aria-describedby="billno"
                     onChange={onChange}
                   />
@@ -197,7 +210,7 @@ const EditBillForm = () => {
                   className="form-control"
                   id="cgst"
                   name="cgst"
-                  value={editBill.cgst}
+                  value={editBillData.cgst}
                   aria-describedby="cgst"
                   onChange={onChange}
                 />
@@ -215,7 +228,7 @@ const EditBillForm = () => {
                     className="form-control"
                     id="sgst"
                     name="sgst"
-                    value={editBill.sgst}
+                    value={editBillData.sgst}
                     aria-describedby="sgst"
                     onChange={onChange}
                   />
@@ -232,7 +245,7 @@ const EditBillForm = () => {
                   className="form-control"
                   id="igst"
                   name="igst"
-                  value={editBill.igst}
+                  value={editBillData.igst}
                   aria-describedby="igst"
                   onChange={onChange}
                 />
@@ -250,7 +263,7 @@ const EditBillForm = () => {
                   className="form-control"
                   id="gramount"
                   name="gramount"
-                  value={editBill.gramount}
+                  value={editBillData.gramount}
                   aria-describedby="gramount"
                   onChange={onChange}
                 />
@@ -266,7 +279,7 @@ const EditBillForm = () => {
                   className="form-control"
                   id="balanceleft"
                   name="balanceleft"
-                  value={editBill.balanceleft}
+                  value={editBillData.balanceleft}
                   aria-describedby="balanceleft"
                   onChange={onChange}
                 />
@@ -281,9 +294,9 @@ const EditBillForm = () => {
                 </label>
                 <ReactDatePicker
                   type="date"
-                  dateFormat="dd/MM/yyyy"
                   className="form-control"
-                  value={new Date(editBill.date).toLocaleDateString()}
+                  value={new Date(editBillData.date).toLocaleDateString()}
+                  dateFormat="dd/MM/yyyy"
                   name="date"
                   onChange={handleDateChange}
                 />
@@ -296,7 +309,7 @@ const EditBillForm = () => {
                 </label>
                 <select
                   className="form-select"
-                  value={editBill.status}
+                  value={editBillData.status}
                   name="status"
                   onChange={onChange}
                 >
@@ -317,7 +330,7 @@ const EditBillForm = () => {
                   className="form-control"
                   id="amount"
                   name="amount"
-                  value={editBill.amount}
+                  value={editBillData.amount}
                   aria-describedby="amount"
                   onChange={onChange}
                 />
@@ -334,7 +347,7 @@ const EditBillForm = () => {
                     className="form-control"
                     id="totalamount"
                     name="totalamount"
-                    value={editBill.totalamount}
+                    value={editBillData.totalamount}
                     aria-describedby="totalamount"
                     onChange={onChange}
                   />
@@ -347,7 +360,6 @@ const EditBillForm = () => {
           </button>
         </form>
       </div>
-      
     </div>
   );
 };

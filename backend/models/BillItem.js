@@ -6,6 +6,10 @@ const billItemSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Bill",
   },
+  sno: {
+    type: Number,
+    unique: true,
+  },
   qty: {
     type: Number,
     required: true,
@@ -19,6 +23,12 @@ const billItemSchema = new Schema({
   },
   amount: {
     type: String,
+  },
+  discount: {
+    type: Number,
+  },
+  netamount: {
+    type: Number,
   },
 });
 
