@@ -33,10 +33,10 @@ const AddBillForm = () => {
 
     if (name === "cgst") {
       totalAmount =
-        parseFloat(value) +
-        parseFloat(newBill.igst) +
-        parseFloat(value) +
-        parseFloat(newBill.amount) -
+        parseFloat(newBill.amount) +
+        (parseFloat(newBill.amount) * 2 * parseFloat(value)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(newBill.isgt)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(value)) / 100 -
         parseFloat(newBill.gramount);
       setNewBill({
         ...newBill,
@@ -46,10 +46,10 @@ const AddBillForm = () => {
       });
     } else if (name === "igst") {
       totalAmount =
-        parseFloat(newBill.cgst) +
-        parseFloat(value) +
-        parseFloat(newBill.sgst) +
-        parseFloat(newBill.amount) -
+        parseFloat(newBill.amount) +
+        (parseFloat(newBill.amount) * parseFloat(newBill.cgst)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(value)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(newBill.sgst)) / 100 -
         parseFloat(newBill.gramount);
       setNewBill({
         ...newBill,
@@ -58,10 +58,10 @@ const AddBillForm = () => {
       });
     } else if (name === "sgst") {
       totalAmount =
-        parseFloat(newBill.cgst) +
-        parseFloat(newBill.igst) +
-        parseFloat(value) +
-        parseFloat(newBill.amount) -
+        parseFloat(newBill.amount) +
+        (parseFloat(newBill.amount) * parseFloat(value)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(newBill.igst)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(value)) / 100 -
         parseFloat(newBill.gramount);
       setNewBill({
         ...newBill,
@@ -70,10 +70,10 @@ const AddBillForm = () => {
       });
     } else if (name === "amount") {
       totalAmount =
-        parseFloat(newBill.cgst) +
-        parseFloat(newBill.igst) +
-        parseFloat(newBill.sgst) +
-        parseFloat(value) -
+        parseFloat(value) +
+        (parseFloat(newBill.amount) * parseFloat(newBill.cgst)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(newBill.igst)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(newBill.sgst)) / 100 -
         parseFloat(newBill.gramount);
       setNewBill({
         ...newBill,
@@ -82,10 +82,10 @@ const AddBillForm = () => {
       });
     } else if (name === "gramount") {
       totalAmount =
-        parseFloat(newBill.cgst) +
-        parseFloat(newBill.igst) +
-        parseFloat(newBill.sgst) +
-        parseFloat(newBill.amount) -
+        parseFloat(newBill.amount) +
+        (parseFloat(newBill.amount) * parseFloat(newBill.cgst)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(newBill.igst)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(newBill.sgst)) / 100 -
         parseFloat(value);
       setNewBill({
         ...newBill,
@@ -175,7 +175,7 @@ const AddBillForm = () => {
             <div className="col-4">
               <div className="mb-3 ">
                 <label htmlfor="cgst" className="form-label">
-                  CGST
+                  CGST%
                 </label>
                 <input
                   type="number"
@@ -193,7 +193,7 @@ const AddBillForm = () => {
               <div className="mb-3 ">
                 <fieldset disabled>
                   <label htmlfor="sgst" className="form-label">
-                    SGST
+                    SGST%
                   </label>
                   <input
                     type="number"
@@ -210,7 +210,7 @@ const AddBillForm = () => {
             <div className="col-4">
               <div className="mb-3 ">
                 <label htmlfor="igst" className="form-label">
-                  IGST
+                  IGST%
                 </label>
                 <input
                   type="number"

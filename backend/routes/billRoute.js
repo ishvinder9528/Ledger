@@ -65,6 +65,7 @@ router.post("/:shopid/add/:billid", async (req, res) => {
       amount: req.body.amount,
       discount: req.body.discount,
       netamount: req.body.netamount,
+      gst: req.body.gst,
 
       billid: req.params.billid,
     });
@@ -118,6 +119,30 @@ router.get("/:shopid/billitems/:billid", async (req, res) => {
       return res.status(404).json({ error: "Shop not found" });
     }
 
+    // check Bill, it exists or not
+    const bill = await Bill.findOne({ _id: req.params.billid });
+    // console.log(bill);
+    if (bill.length === 0) {
+      console.log("Bills Not Found");
+      return res.json({ error: "Bills Not Found" });
+    }
+
+    const billItems = await BillItem.find({ billid: req.params.billid });
+
+    if (billItems.length === 0) {
+      console.log("BillItems Not Found");
+      return res.json({ error: "BillItems Not Found" });
+    }
+    res.json({ billItems });
+    // console.log("BillItems => ", billItems);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+//  Request 4: Get all the billItems of particular Bill of particular shop GET => http://localhost:5000/bills/:shopid/billitems/:billid
+router.get("/billitems/:billid", async (req, res) => {
+  try {
     // check Bill, it exists or not
     const bill = await Bill.findOne({ _id: req.params.billid });
     // console.log(bill);

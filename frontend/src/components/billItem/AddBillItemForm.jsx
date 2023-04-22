@@ -3,7 +3,7 @@ import BillContext from "../../contexts/bill/billContext";
 
 const AddBillItemForm = (props) => {
   const context = useContext(BillContext);
-  const { shopId, bill_Id, addBillItem,getBillItems } = context;
+  const { shopId, bill_Id, addBillItem, getBillItems } = context;
   const [billitem, setBillItem] = useState({
     sno: "",
     qty: 0,
@@ -12,6 +12,7 @@ const AddBillItemForm = (props) => {
     discount: 0,
     netamount: "",
     itemdesc: "",
+    gst: "",
   });
 
   const onChange = (e) => {
@@ -19,9 +20,12 @@ const AddBillItemForm = (props) => {
     let qty = parseFloat(billitem.qty);
     let price = parseFloat(billitem.price);
     let discount = parseFloat(billitem.discount);
+    let gst = parseFloat(billitem.gst);
+
     qty = isNaN(qty) ? 0 : qty;
     price = isNaN(price) ? 0 : price;
     discount = isNaN(discount) ? 0 : discount;
+    gst = isNaN(gst) ? 0 : gst;
 
     // update the state based on the changed field
     if (name === "qty") {
@@ -30,10 +34,16 @@ const AddBillItemForm = (props) => {
       price = parseFloat(value);
     } else if (name === "discount") {
       discount = parseFloat(value);
+    } else if (name === "gst") {
+      gst = parseFloat(value);
     }
 
     let amount = (qty * price).toFixed(2);
-    let netamount = (amount - amount * (discount / 100)).toFixed(2);
+    let netamount = (
+      amount -
+      amount * (discount / 100) +
+      amount * (gst / 100)
+    ).toFixed(2);
 
     // update the state with the new values
     setBillItem({
@@ -44,6 +54,7 @@ const AddBillItemForm = (props) => {
       discount,
       amount,
       netamount,
+      gst,
     });
   };
 
@@ -58,7 +69,10 @@ const AddBillItemForm = (props) => {
       discount: 0,
       netamount: "",
       itemdesc: "",
+      gst: "",
     });
+    getBillItems(shopId, bill_Id);
+    getBillItems(shopId, bill_Id);
     getBillItems(shopId, bill_Id);
     getBillItems(shopId, bill_Id);
   };
@@ -129,6 +143,23 @@ const AddBillItemForm = (props) => {
               />
             </div>
           </div>
+
+          <div className="col-md-1">
+            <div className="mb-3">
+              <label for="gst" className="form-label">
+                GST %
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                id="gst"
+                name="gst"
+                value={billitem.gst}
+                onChange={onChange}
+              />
+            </div>
+          </div>
+
           <div className="col-md-2">
             <div className="mb-3">
               <label for="Amount" className="form-label">
@@ -145,6 +176,7 @@ const AddBillItemForm = (props) => {
               />
             </div>
           </div>
+
           <div className="col-md-2">
             <div className="mb-3">
               <label for="netamount" className="form-label">
@@ -161,7 +193,8 @@ const AddBillItemForm = (props) => {
               />
             </div>
           </div>
-          <div className="col-md-3">
+
+          <div className="col-md-2">
             <div className="mb-3">
               <label for="itemdesc" className="form-label">
                 Item Desc.

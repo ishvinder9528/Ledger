@@ -1,21 +1,36 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, createRef } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import { useNavigate } from "react-router-dom";
-import BillItemModal from "../billItem/BillItemModal"
+import BillItemModal from "../billItem/BillItemModal";
 const AllBills = () => {
   const context = useContext(BillContext);
-  const { shopId, getAll, billsData, loaded, setLoaded, setShopId } = context;
+  const {
+    shopId,
+    getAll,
+    billsData,
+    loaded,
+    setLoaded,
+    setShopId,
+
+    setBillId,
+    setBill_Id,
+  } = context;
   const [bills, setBills] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [sortDirection, setSortDirection] = useState("asc");
-
+  const showBillItemModal = createRef(null);
+  const closeBillItemModal = createRef(null);
   const navigate = useNavigate();
   useEffect(() => {
     if (!loaded) {
       getAll(shopId);
+      getAll(shopId);
+      getAll(shopId);
     } else {
+      setBills(billsData);
+      setBills(billsData);
       setBills(billsData);
     }
 
@@ -39,20 +54,19 @@ const AllBills = () => {
         })
       : bills;
 
-      const handleSort = () => {
-        const sortedBills = [...filteredBills].sort((a, b) => {
-          const dateA = new Date(a.date);
-          const dateB = new Date(b.date);
-          if (sortDirection === "asc") {
-            return dateA - dateB;
-          } else {
-            return dateB - dateA;
-          }
-        });
-        setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-        setBills(sortedBills);
-      };
-      
+  const handleSort = () => {
+    const sortedBills = [...filteredBills].sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      if (sortDirection === "asc") {
+        return dateA - dateB;
+      } else {
+        return dateB - dateA;
+      }
+    });
+    setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    setBills(sortedBills);
+  };
 
   return (
     <div>
@@ -147,7 +161,10 @@ const AllBills = () => {
                 Bill No
               </th>
               <th scope="col" className=" text-bg-warning">
-                Date{"  "}<span style={{cursor:"pointer"}} onClick={handleSort}><i class="fa-solid fa-sort"></i></span>
+                Date{"  "}
+                <span style={{ cursor: "pointer" }} onClick={handleSort}>
+                  <i class="fa-solid fa-sort"></i>
+                </span>
               </th>
               <th scope="col" className=" text-bg-warning">
                 CGST
@@ -208,7 +225,11 @@ const AllBills = () => {
                         <i
                           className="fa-solid fa-hand-pointer fa-lg px-2"
                           style={{ color: "#0aea06" }}
-                          onClick={{}}
+                          onClick={() => {
+                            showBillItemModal.current.click();
+                            setBillId(bill.billid);
+                            setBill_Id(bill._id);
+                          }}
                         ></i>
                       </td>
                     </tr>
@@ -225,7 +246,10 @@ const AllBills = () => {
           </tbody>
         </table>
       </div>
-      <BillItemModal/>
+      <BillItemModal
+        showBillItemModal={showBillItemModal}
+        closeBillItemModal={closeBillItemModal}
+      />
     </div>
   );
 };

@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, createRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ShopContext from "../../contexts/shop/shopContext";
 import BillContext from "../../contexts/bill/billContext";
+import DeleteShopModal from "./DeleteShopModal";
 
 const ShopTableData = (props) => {
   const { shop } = props;
@@ -11,7 +12,8 @@ const ShopTableData = (props) => {
   const { setShopId, setShopName } = billContext;
   const { deleteShop, setIsEdit } = context;
   const navigate = useNavigate();
-
+  const showDeleteShopModal = createRef(null);
+  const closeDeleteShopModal = createRef(null);
   return (
     <>
       <tr key={shop._id}>
@@ -39,7 +41,11 @@ const ShopTableData = (props) => {
               <i
                 className="fa-solid fa-trash-can fa-lg px-3"
                 style={{ color: "red" }}
-                onClick={() => deleteShop(shop._id)}
+                onClick={() => {
+                  // deleteShop(shop._id);
+                  setShopId(shop._id);
+                  showDeleteShopModal.current.click();
+                }}
               ></i>
             </td>
             <td>
@@ -53,6 +59,11 @@ const ShopTableData = (props) => {
                 }}
               ></i>
             </td>
+            <DeleteShopModal
+              showDeleteShopModal={showDeleteShopModal}
+              closeDeleteShopModal={closeDeleteShopModal}
+              
+            />
           </>
         )}
       </tr>

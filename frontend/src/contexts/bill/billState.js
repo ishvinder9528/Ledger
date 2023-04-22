@@ -210,6 +210,49 @@ const BillState = (props) => {
     }
   };
 
+  // Delete a bill item from the particular bill of particular shop
+  const deleteBillItem = async (shopid, billid, billitemid) => {
+    try {
+      const response = await fetch(
+        `${host}/bills/${shopid}/${billid}/delete/${billitemid}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        const data = billItems.filter(
+          (billitem) => billitem._id !== billitemid
+        );
+        setBillItems(data);
+        showAlert("Bill deleted Successfully", "success");
+      }
+    } catch (error) {
+      console.log(error);
+      showAlert("Opps, Something went wrong", "danger");
+    }
+  };
+
+  // get all billItems without shopid
+  const getBillItemsWS = async (billid) => {
+    try {
+      const response = await fetch(
+        `${host}/bills/billitems/${billid}`,
+        {
+          method: "GET",
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.billItems);
+        setBillItems(data.billItems);
+        setBillItemLoaded(true);
+      }
+    } catch (error) {
+      console.log(error);
+      showAlert("Opps, Something went wrong", "danger");
+    }
+  };
+
   return (
     <>
       <BillContext.Provider
@@ -243,6 +286,8 @@ const BillState = (props) => {
           billItemLoaded,
           editBill,
           addBillItem,
+          deleteBillItem,
+          getBillItemsWS
         }}
       >
         {props.children}

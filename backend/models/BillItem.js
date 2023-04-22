@@ -30,6 +30,9 @@ const billItemSchema = new Schema({
   netamount: {
     type: Number,
   },
+  gst:{
+    type: Number
+  }
 });
 
 const BillItem = mongoose.model("BillItem", billItemSchema);

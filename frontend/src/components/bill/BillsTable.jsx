@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useContext, createRef } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import BillItemModal from "../billItem/BillItemModal";
+import DeleteBillModal from "./DeleteBillModal";
 const BillsTable = () => {
+  const openDeleteBillModal = createRef(null);
+  const closeDeleteBillModal = createRef(null);
   const context = useContext(BillContext);
   const {
     shopId,
     getBill,
     billsData,
     loaded,
-    deleteBill,
     setIsEdit,
     setBillId,
     setBill_Id,
@@ -113,7 +115,10 @@ const BillsTable = () => {
                     <i
                       className="fa-solid fa-trash-can fa-lg px-3"
                       style={{ color: "red" }}
-                      onClick={() => deleteBill(shopId, bill._id)}
+                      onClick={() => {
+                        openDeleteBillModal.current.click();
+                        setBill_Id(bill._id);
+                      }}
                     ></i>
                   </td>
                   <td
@@ -145,6 +150,10 @@ const BillsTable = () => {
           )}
         </tbody>
       </table>
+      <DeleteBillModal
+        openDeleteBillModal={openDeleteBillModal}
+        closeDeleteBillModal={closeDeleteBillModal}
+      />
       <BillItemModal
         showBillItemModal={showBillItemModal}
         closeBillItemModal={closeBillItemModal}

@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import AddBillItemForm from "./AddBillItemForm";
 import BillItemTable from "./BillItemTable";
+import { useLocation } from "react-router-dom";
 
 const BillItemModal = (props) => {
   const [isAdd, setIsAdd] = useState(false);
   const context = useContext(BillContext);
+  const location = useLocation()
   const {
     shopName,
     billId,
@@ -18,6 +20,7 @@ const BillItemModal = (props) => {
   } = context;
 
   useEffect(() => {
+    console.log(location.pathname);
     getBillItems(shopId, bill_Id);
     getBillItems(shopId, bill_Id);
     if (billItemLoaded) {
@@ -63,6 +66,8 @@ const BillItemModal = (props) => {
             </div>
             <div className="modal-body">
               <BillItemTable />
+              {location.pathname ==='/all' ?"" :(
+
               <div
                 className="btn btn-warning"
                 onClick={() => {
@@ -71,6 +76,7 @@ const BillItemModal = (props) => {
               >
                 +
               </div>
+              )}
               {isAdd && <AddBillItemForm setIsAdd={setIsAdd} />}
             </div>
             <div className="modal-footer mt-4">
