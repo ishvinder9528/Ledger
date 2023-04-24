@@ -12,7 +12,7 @@ const BillState = (props) => {
   const [bill_Id, setBill_Id] = useState("");
   const [billItems, setBillItems] = useState([]);
   const [billItemLoaded, setBillItemLoaded] = useState(false);
-  const host = "http://localhost:5000";
+  const host = "https://ledgerbackend.onrender.com";
   const showAlert = (message, type) => {
     setAlert({
       msg: message,

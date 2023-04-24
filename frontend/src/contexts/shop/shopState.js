@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ShopContext from "./shopContext";
 
 const ShopState = (props) => {
-  const host = "http://localhost:5000";
+  const host = "https://ledgerbackend.onrender.com";
   const [shops, setShops] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [alert, setAlert] = useState(null);
