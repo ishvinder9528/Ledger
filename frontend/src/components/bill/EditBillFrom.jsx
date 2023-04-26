@@ -43,10 +43,10 @@ const EditBillForm = () => {
 
     if (name === "cgst") {
       totalAmount =
-        parseFloat(value) +
-        parseFloat(editBillData.igst) +
-        parseFloat(value) +
-        parseFloat(editBillData.amount) -
+      parseFloat(editBillData.amount) +
+        (parseFloat(editBillData.amount) * 2 * parseFloat(value)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.isgt)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(value)) / 100 -
         parseFloat(editBillData.gramount);
       setEditBillData({
         ...editBillData,
@@ -56,10 +56,10 @@ const EditBillForm = () => {
       });
     } else if (name === "igst") {
       totalAmount =
-        parseFloat(editBillData.cgst) +
-        parseFloat(value) +
-        parseFloat(editBillData.sgst) +
-        parseFloat(editBillData.amount) -
+               parseFloat(editBillData.amount) +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.cgst)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(value)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.sgst)) / 100 -
         parseFloat(editBillData.gramount);
       setEditBillData({
         ...editBillData,
@@ -68,10 +68,10 @@ const EditBillForm = () => {
       });
     } else if (name === "sgst") {
       totalAmount =
-        parseFloat(editBillData.cgst) +
-        parseFloat(editBillData.igst) +
-        parseFloat(value) +
-        parseFloat(editBillData.amount) -
+        parseFloat(editBillData.amount) +
+        (parseFloat(editBillData.amount) * parseFloat(value)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(value)) / 100 -
         parseFloat(editBillData.gramount);
       setEditBillData({
         ...editBillData,
@@ -80,10 +80,10 @@ const EditBillForm = () => {
       });
     } else if (name === "amount") {
       totalAmount =
-        parseFloat(editBillData.cgst) +
-        parseFloat(editBillData.igst) +
-        parseFloat(editBillData.sgst) +
-        parseFloat(value) -
+        parseFloat(value) +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.cgst)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.sgst)) / 100 -
         parseFloat(editBillData.gramount);
       setEditBillData({
         ...editBillData,
@@ -92,10 +92,10 @@ const EditBillForm = () => {
       });
     } else if (name === "gramount") {
       totalAmount =
-        parseFloat(editBillData.cgst) +
-        parseFloat(editBillData.igst) +
-        parseFloat(editBillData.sgst) +
-        parseFloat(editBillData.amount) -
+       parseFloat(editBillData.amount) +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.cgst)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.sgst)) / 100 -
         parseFloat(value);
       setEditBillData({
         ...editBillData,
