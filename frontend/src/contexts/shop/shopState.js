@@ -63,6 +63,7 @@ const ShopState = (props) => {
         setShops(shops.concat(data));
         console.log("Total Shop", shops);
         showAlert("Shop Added Successfully!", "success");
+        getShops();
       } else {
         showAlert(
           "Name and GST Number Should be Unique and Required",
@@ -90,6 +91,7 @@ const ShopState = (props) => {
         });
         setShops(newShop);
         showAlert("Shop Deleted Successfully!", "success");
+        getShops();
       }
     } catch (error) {
       showAlert("Opps, Something went wrong", "danger");
@@ -114,25 +116,30 @@ const ShopState = (props) => {
 
   // Update the shop data
   const updateShop = async (data) => {
-    console.log(data);
-    const request = await fetch(`${host}/shops/${data._id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (request.ok) {
-      const newShops = JSON.parse(JSON.stringify(shops));
-      for (let i = 0; i < newShops.length; i++) {
-        const element = newShops[i];
-        if (element._id === data._id) {
-          newShops[i] = data;
-          break;
+    try {
+      console.log(data);
+      const request = await fetch(`${host}/shops/${data._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (request.ok) {
+        const newShops = JSON.parse(JSON.stringify(shops));
+        for (let i = 0; i < newShops.length; i++) {
+          const element = newShops[i];
+          if (element._id === data._id) {
+            newShops[i] = data;
+            break;
+          }
         }
+        setShops(newShops);
+        showAlert("Shop Data Updated Successfully", "success");
+        getShops();
       }
-      setShops(newShops);
-      showAlert("Shop Data Updated Successfully", "success");
+    } catch (error) {
+      showAlert("Opps, Something went wrong", "danger");
     }
   };
 
@@ -156,7 +163,6 @@ const ShopState = (props) => {
         setShowModal,
         shopName,
         setShopName,
-     
       }}
     >
       {props.children}

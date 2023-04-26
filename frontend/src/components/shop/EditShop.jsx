@@ -10,6 +10,7 @@ const EditShop = () => {
     setEditShopData,
     updateShop,
     deleteShop,
+    setLoaded,
   } = context;
   useEffect(() => {
     setEditShopData({
@@ -41,6 +42,7 @@ const EditShop = () => {
       value: false,
       id: "",
     });
+    setLoaded(false);
   };
 
   return (
@@ -58,6 +60,7 @@ const EditShop = () => {
             id="name"
             aria-describedby="name"
             value={editShopData.name}
+            placeholder="Please wait Loading...."
             onChange={onChange}
           />
         </div>
@@ -68,6 +71,7 @@ const EditShop = () => {
           <input
             type="text"
             name="gstno"
+            placeholder="Please wait Loading...."
             className="form-control"
             id="gstno"
             aria-describedby="gstno"
@@ -84,6 +88,7 @@ const EditShop = () => {
               type="text"
               name="location"
               className="form-control"
+              placeholder="Please wait Loading...."
               id="location"
               aria-describedby="location"
               value={editShopData.location}
@@ -101,7 +106,7 @@ const EditShop = () => {
               name="phone"
               className="form-control"
               id="phone"
-              placeholder=" 9999999999"
+              placeholder="Please wait Loading...."
               aria-describedby="phone"
               value={editShopData.phone}
               onChange={onChange}
@@ -109,21 +114,21 @@ const EditShop = () => {
           </div>
         </span>
         <div className="mb-3" style={{ maxWidth: "20rem" }}>
-        <fieldset disabled>
-
-          <label htmfor="pendingAmount" className="form-label">
-            Pending Amount
-          </label>
-          <input
-            type="number"
-            name="pendingAmount"
-            className="form-control"
-            id="pendingAmount"
-            aria-describedby="pendingAmount"
-            value={editShopData.pendingAmount}
-            onChange={onChange}
+          <fieldset disabled>
+            <label htmfor="pendingAmount" className="form-label">
+              Pending Amount
+            </label>
+            <input
+              type="number"
+              name="pendingAmount"
+              className="form-control"
+              placeholder="Please wait Loading...."
+              id="pendingAmount"
+              aria-describedby="pendingAmount"
+              value={editShopData.pendingAmount}
+              onChange={onChange}
             />
-            </fieldset>
+          </fieldset>
         </div>
 
         <button type="submit" className="btn btn-success">

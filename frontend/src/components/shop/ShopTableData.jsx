@@ -10,7 +10,7 @@ const ShopTableData = (props) => {
   const context = useContext(ShopContext);
   const billContext = useContext(BillContext);
   const { setShopId, setShopName } = billContext;
-  const { deleteShop, setIsEdit } = context;
+  const { setIsEdit } = context;
   const navigate = useNavigate();
   const showDeleteShopModal = createRef(null);
   const closeDeleteShopModal = createRef(null);
@@ -62,7 +62,6 @@ const ShopTableData = (props) => {
             <DeleteShopModal
               showDeleteShopModal={showDeleteShopModal}
               closeDeleteShopModal={closeDeleteShopModal}
-              
             />
           </>
         )}

@@ -4,7 +4,7 @@ import BillContext from "../../contexts/bill/billContext";
 
 const DeleteShopModal = (props) => {
   const context = useContext(ShopContext);
-  const { deleteShop } = context;
+  const { deleteShop, setLoaded } = context;
   const billContext = useContext(BillContext);
   const { shopId, setShopId } = billContext;
   return (
@@ -62,6 +62,7 @@ const DeleteShopModal = (props) => {
                 onClick={() => {
                   deleteShop(shopId);
                   setShopId("");
+                  setLoaded(false);
                   props.closeDeleteShopModal.current.click();
                 }}
               >

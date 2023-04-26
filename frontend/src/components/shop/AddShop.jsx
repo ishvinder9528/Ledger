@@ -10,7 +10,8 @@ const AddShop = () => {
     pendingAmount: 0,
   });
   const context = useContext(ShopContext);
-  const { addShop, getShops } = context;
+  const { addShop, setLoaded } = context;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     addShop(shop);
@@ -21,12 +22,9 @@ const AddShop = () => {
       phone: "",
       pendingAmount: 0,
     });
-    getShops();
-    getShops();
-    getShops();
-    getShops();
-    getShops();
+    setLoaded(false);
   };
+
   const onChange = (e) => {
     setShop({ ...shop, [e.target.name]: e.target.value });
   };
@@ -96,21 +94,20 @@ const AddShop = () => {
           </div>
         </span>
         <div className="mb-3" style={{ maxWidth: "20rem" }}>
-        <fieldset disabled>
-
-          <label htmfor="pendingAmount" className="form-label">
-            Pending Amount
-          </label>
-          <input
-            type="number"
-            name="pendingAmount"
-            className="form-control"
-            id="pendingAmount"
-            aria-describedby="pendingAmount"
-            value={shop.pendingAmount}
-            onChange={onChange}
+          <fieldset disabled>
+            <label htmfor="pendingAmount" className="form-label">
+              Pending Amount
+            </label>
+            <input
+              type="number"
+              name="pendingAmount"
+              className="form-control"
+              id="pendingAmount"
+              aria-describedby="pendingAmount"
+              value={shop.pendingAmount}
+              onChange={onChange}
             />
-            </fieldset>
+          </fieldset>
         </div>
 
         <button type="submit" className="btn btn-warning">
