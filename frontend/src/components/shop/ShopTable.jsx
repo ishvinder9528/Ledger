@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import ShopContext from "../../contexts/shop/shopContext";
 import ShopTableData from "./ShopTableData";
 import { useLocation } from "react-router-dom";
+import Spinner from "../Spinner";
+
 const ShopTable = (props) => {
   const { value } = props;
   const context = useContext(ShopContext);
@@ -10,12 +12,11 @@ const ShopTable = (props) => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    // console.log(loaded);
     if (!loaded) {
       getShops();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded]);
+  }, [loaded,shops]);
 
   const filteredShops =
     loaded && shops
@@ -89,8 +90,17 @@ const ShopTable = (props) => {
               )}
             </tr>
           </thead>
-          <tbody>
-            {value ? (
+          <tbody className="text-center">
+            {!loaded ? (
+              <tr>
+                <td
+                  colSpan={location.pathname === "/" ? "5" : "8"}
+                  className="text-center"
+                >
+                  <Spinner />
+                </td>
+              </tr>
+            ) : value ? (
               filteredShops.length > 0 ? (
                 filteredShops.slice(0, value).map((shop) => {
                   return <ShopTableData key={shop._id} shop={shop} />;
