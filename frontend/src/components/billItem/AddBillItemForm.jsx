@@ -83,7 +83,7 @@ const AddBillItemForm = (props) => {
         <div className="row">
           <div className="col-md-1">
             <div className="mb-3">
-              <label for="sno" className="form-label">
+              <label htmlfor="sno" className="form-label">
                 Sno.
               </label>
               <input
@@ -98,7 +98,7 @@ const AddBillItemForm = (props) => {
           </div>
           <div className="col-md-1">
             <div className="mb-3">
-              <label for="qty" className="form-label">
+              <label htmlfor="qty" className="form-label">
                 Qty
               </label>
               <input
@@ -114,7 +114,7 @@ const AddBillItemForm = (props) => {
 
           <div className="col-md-2">
             <div className="mb-3">
-              <label for="price" className="form-label">
+              <label htmlfor="price" className="form-label">
                 Price
               </label>
               <input
@@ -130,7 +130,7 @@ const AddBillItemForm = (props) => {
 
           <div className="col-md-1">
             <div className="mb-3">
-              <label for="discount" className="form-label">
+              <label htmlfor="discount" className="form-label">
                 Discount%
               </label>
               <input
@@ -146,7 +146,7 @@ const AddBillItemForm = (props) => {
 
           <div className="col-md-1">
             <div className="mb-3">
-              <label for="gst" className="form-label">
+              <label htmlfor="gst" className="form-label">
                 GST %
               </label>
               <input
@@ -162,7 +162,7 @@ const AddBillItemForm = (props) => {
 
           <div className="col-md-2">
             <div className="mb-3">
-              <label for="Amount" className="form-label">
+              <label htmlfor="Amount" className="form-label">
                 Amount
               </label>
               <input
@@ -179,7 +179,7 @@ const AddBillItemForm = (props) => {
 
           <div className="col-md-2">
             <div className="mb-3">
-              <label for="netamount" className="form-label">
+              <label htmlfor="netamount" className="form-label">
                 Net Amount
               </label>
               <input
@@ -196,7 +196,7 @@ const AddBillItemForm = (props) => {
 
           <div className="col-md-2">
             <div className="mb-3">
-              <label for="itemdesc" className="form-label">
+              <label htmlfor="itemdesc" className="form-label">
                 Item Desc.
               </label>
               <input

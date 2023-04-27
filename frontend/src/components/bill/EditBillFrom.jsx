@@ -20,16 +20,16 @@ const EditBillForm = () => {
     console.log(shopName);
     setEditBillData({
       shopname: shopName,
-      billid: "A-",
+      billid: "",
       billno: "",
-      cgst: 0,
-      sgst: 0,
-      igst: 0,
-      gramount: 0,
-      balanceleft: 0,
-      amount: 0,
-      totalamount: 0,
-      status: "Paid",
+      cgst: "",
+      sgst: "",
+      igst: "",
+      gramount: "",
+      balanceleft: "",
+      amount: "",
+      totalamount: "",
+      status: "",
       date: new Date(),
     });
     getBillData(shopId, isEdit.id);
@@ -121,20 +121,6 @@ const EditBillForm = () => {
     console.log(shopId);
     console.log(editBillData);
     editBill(shopId, isEdit.id, editBillData);
-    setEditBillData({
-      shopname: shopName,
-      billid: "A-",
-      billno: "",
-      cgst: 0,
-      sgst: 0,
-      igst: 0,
-      gramount: 0,
-      balanceleft: 0,
-      amount: 0,
-      totalamount: 0,
-      status: "Paid",
-      date: new Date(),
-    });
     getBill(shopId);
     getBill(shopId);
     getBill(shopId);
@@ -177,7 +163,7 @@ const EditBillForm = () => {
                   name="billid"
                   value={editBillData.billid}
                   aria-describedby="billid"
-                  placeholder="A-id"
+                  placeholder="Fetching... Please wait..."
                   onChange={onChange}
                 />
               </div>
@@ -194,6 +180,7 @@ const EditBillForm = () => {
                     value={editBillData.billno}
                     aria-describedby="billno"
                     onChange={onChange}
+                    placeholder="Fetching... Please wait..."
                   />
                 </div>
               </div>
@@ -203,7 +190,7 @@ const EditBillForm = () => {
             <div className="col-4">
               <div className="mb-3 ">
                 <label htmlfor="cgst" className="form-label">
-                  Edit CGST
+                  Edit CGST %
                 </label>
                 <input
                   type="number"
@@ -213,6 +200,7 @@ const EditBillForm = () => {
                   value={editBillData.cgst}
                   aria-describedby="cgst"
                   onChange={onChange}
+                  placeholder="Fetching... Please wait..."
                 />
               </div>
             </div>
@@ -221,7 +209,7 @@ const EditBillForm = () => {
               <div className="mb-3 ">
                 <fieldset disabled>
                   <label htmlfor="sgst" className="form-label">
-                    Edit SGST
+                    Edit SGST %
                   </label>
                   <input
                     type="number"
@@ -231,6 +219,7 @@ const EditBillForm = () => {
                     value={editBillData.sgst}
                     aria-describedby="sgst"
                     onChange={onChange}
+                    placeholder="Fetching... Please wait..."
                   />
                 </fieldset>
               </div>
@@ -238,7 +227,7 @@ const EditBillForm = () => {
             <div className="col-4">
               <div className="mb-3 ">
                 <label htmlfor="igst" className="form-label">
-                  Edit IGST
+                  Edit IGST %
                 </label>
                 <input
                   type="number"
@@ -247,6 +236,7 @@ const EditBillForm = () => {
                   name="igst"
                   value={editBillData.igst}
                   aria-describedby="igst"
+                  placeholder="Fetching... Please wait..."
                   onChange={onChange}
                 />
               </div>
@@ -266,6 +256,7 @@ const EditBillForm = () => {
                   value={editBillData.gramount}
                   aria-describedby="gramount"
                   onChange={onChange}
+                  placeholder="Fetching... Please wait..."
                 />
               </div>
             </div>
@@ -282,6 +273,7 @@ const EditBillForm = () => {
                   value={editBillData.balanceleft}
                   aria-describedby="balanceleft"
                   onChange={onChange}
+                  placeholder="Fetching... Please wait..."
                 />
               </div>
             </div>
@@ -312,6 +304,7 @@ const EditBillForm = () => {
                   value={editBillData.status}
                   name="status"
                   onChange={onChange}
+                  placeholder="Fetching... Please wait..."
                 >
                   <option value="Paid">Paid</option>
                   <option value="Not Paid">Not Paid</option>
@@ -329,6 +322,7 @@ const EditBillForm = () => {
                   type="number"
                   className="form-control"
                   id="amount"
+                  placeholder="Fetching... Please wait..."
                   name="amount"
                   value={editBillData.amount}
                   aria-describedby="amount"
@@ -348,6 +342,7 @@ const EditBillForm = () => {
                     id="totalamount"
                     name="totalamount"
                     value={editBillData.totalamount}
+                    placeholder="Fetching... Please wait..."
                     aria-describedby="totalamount"
                     onChange={onChange}
                   />

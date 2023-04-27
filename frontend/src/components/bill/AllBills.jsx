@@ -95,16 +95,16 @@ const AllBills = () => {
           <div className="col-md-3"></div>
         </div>
 
-        <div class="container my-5">
-          <div class="row align-items-center">
-            <div class="col-md-4">
-              <label for="search" class="form-label">
+        <div className="container my-5">
+          <div className="row align-items-center">
+            <div className="col-md-4">
+              <label htmlfor="search" className="form-label">
                 Shop Name
               </label>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   id="search"
                   name="search"
                   placeholder="Search by Shop Name"
@@ -112,18 +112,18 @@ const AllBills = () => {
                     setSearchText(e.target.value);
                   }}
                 />
-                <button class="btn btn-warning" type="button">
-                  <i class="fas fa-search"></i>
+                <button className="btn btn-warning" type="button">
+                  <i className="fas fa-search"></i>
                 </button>
               </div>
             </div>
-            <div class="col-md-4">
-              <label for="fromDate" class="form-label">
+            <div className="col-md-4">
+              <label htmlfor="fromDate" className="form-label">
                 From Date
               </label>
               <input
                 type="date"
-                class="form-control"
+                className="form-control"
                 id="fromDate"
                 name="fromDate"
                 onChange={(e) => {
@@ -131,13 +131,13 @@ const AllBills = () => {
                 }}
               />
             </div>
-            <div class="col-md-4">
-              <label for="toDate" class="form-label">
+            <div className="col-md-4">
+              <label htmlfor="toDate" className="form-label">
                 To Date
               </label>
               <input
                 type="date"
-                class="form-control"
+                className="form-control"
                 id="toDate"
                 name="toDate"
                 onChange={(e) => {
@@ -163,7 +163,7 @@ const AllBills = () => {
               <th scope="col" className=" text-bg-warning">
                 Date{"  "}
                 <span style={{ cursor: "pointer" }} onClick={handleSort}>
-                  <i class="fa-solid fa-sort"></i>
+                  <i className="fa-solid fa-sort"></i>
                 </span>
               </th>
               <th scope="col" className=" text-bg-warning">

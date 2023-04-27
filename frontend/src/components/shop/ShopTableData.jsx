@@ -59,13 +59,13 @@ const ShopTableData = (props) => {
                 }}
               ></i>
             </td>
-            <DeleteShopModal
-              showDeleteShopModal={showDeleteShopModal}
-              closeDeleteShopModal={closeDeleteShopModal}
-            />
           </>
         )}
       </tr>
+      <DeleteShopModal
+        showDeleteShopModal={showDeleteShopModal}
+        closeDeleteShopModal={closeDeleteShopModal}
+      />
     </>
   );
 };

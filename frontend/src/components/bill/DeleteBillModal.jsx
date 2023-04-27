@@ -10,7 +10,7 @@ const DeleteBillModal = (props) => {
       {/* <!-- Button trigger modal --> */}
       <button
         type="button"
-        class="btn btn-primary d-none"
+        className="btn btn-primary d-none"
         ref={props.openDeleteBillModal}
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
@@ -20,35 +20,35 @@ const DeleteBillModal = (props) => {
 
       {/* <!-- Modal --> */}
       <div
-        class="modal fade"
+        className="modal fade"
         id="exampleModal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content ">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content ">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
                 Delete Bill?
               </h1>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body  ">
+            <div className="modal-body  ">
               <p>Are you really Want to delete this Bill</p>
               <div style={{ fontSize: "14px" }}>
                 This will delete this Bill along with BillItems
               </div>
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-bs-dismiss="modal"
                 ref={props.closeDeleteBillModal}
               >
@@ -56,7 +56,7 @@ const DeleteBillModal = (props) => {
               </button>
               <button
                 type="button"
-                class="btn btn-danger"
+                className="btn btn-danger"
                 onClick={() => {
                   deleteBill(shopId, bill_Id);
                   setBill_Id("");

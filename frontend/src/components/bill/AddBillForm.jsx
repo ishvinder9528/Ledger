@@ -139,7 +139,7 @@ const AddBillForm = () => {
           <div className="mb-3 ">
             <div className="row">
               <div className="col-6">
-                <label htmlfor="billid" className="form-label">
+                <label htmlFor="billid" className="form-label">
                   Bill ID
                 </label>
                 <input
@@ -155,7 +155,7 @@ const AddBillForm = () => {
               </div>
               <div className="col-6">
                 <div className="mb-3 ">
-                  <label htmlfor="billno" className="form-label">
+                  <label htmlFor="billno" className="form-label">
                     Bill No
                   </label>
                   <input
@@ -174,7 +174,7 @@ const AddBillForm = () => {
           <div className="row">
             <div className="col-4">
               <div className="mb-3 ">
-                <label htmlfor="cgst" className="form-label">
+                <label htmlFor="cgst" className="form-label">
                   CGST%
                 </label>
                 <input
@@ -192,7 +192,7 @@ const AddBillForm = () => {
             <div className="col-4">
               <div className="mb-3 ">
                 <fieldset disabled>
-                  <label htmlfor="sgst" className="form-label">
+                  <label htmlFor="sgst" className="form-label">
                     SGST%
                   </label>
                   <input
@@ -209,7 +209,7 @@ const AddBillForm = () => {
             </div>
             <div className="col-4">
               <div className="mb-3 ">
-                <label htmlfor="igst" className="form-label">
+                <label htmlFor="igst" className="form-label">
                   IGST%
                 </label>
                 <input
@@ -227,7 +227,7 @@ const AddBillForm = () => {
           <div className="row">
             <div className="col-6">
               <div className="mb-3 ">
-                <label htmlfor="gramount" className="form-label">
+                <label htmlFor="gramount" className="form-label">
                   GR Amount
                 </label>
                 <input
@@ -243,7 +243,7 @@ const AddBillForm = () => {
             </div>
             <div className="col-6">
               <div className="mb-3 ">
-                <label htmlfor="balanceleft" className="form-label">
+                <label htmlFor="balanceleft" className="form-label">
                   Pending Amount
                 </label>
                 <input
@@ -261,7 +261,7 @@ const AddBillForm = () => {
           <div className="row">
             <div className="col-6">
               <div className="mb-3">
-                <label htmlfor="date" className="form-label">
+                <label htmlFor="date" className="form-label">
                   Date
                 </label>
                 <ReactDatePicker
@@ -276,7 +276,7 @@ const AddBillForm = () => {
             </div>
             <div className="col-6">
               <div className="mb-3 ">
-                <label htmlfor="status" className="form-label">
+                <label htmlFor="status" className="form-label">
                   Status
                 </label>
                 <select
@@ -294,7 +294,7 @@ const AddBillForm = () => {
           <div className="row">
             <div className="col-6">
               <div className="mb-3 ">
-                <label htmlfor="amount" className="form-label">
+                <label htmlFor="amount" className="form-label">
                   Amount
                 </label>
                 <input
@@ -311,7 +311,7 @@ const AddBillForm = () => {
             <div className="col-6">
               <div className="mb-3 ">
                 <fieldset disabled>
-                  <label htmlfor="totalamount" className="form-label">
+                  <label htmlFor="totalamount" className="form-label">
                     Total Amount
                   </label>
                   <input

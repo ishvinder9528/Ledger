@@ -90,7 +90,7 @@ const ShopTable = (props) => {
               )}
             </tr>
           </thead>
-          <tbody className="text-center">
+          <tbody >
             {!loaded ? (
               <tr>
                 <td

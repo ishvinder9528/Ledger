@@ -48,13 +48,13 @@ const BillsTable = () => {
               Date
             </th>
             <th scope="col" className=" text-bg-warning">
-              CGST
+              CGST in %
             </th>
             <th scope="col" className=" text-bg-warning">
-              SGST
+              SGST in %
             </th>
             <th scope="col" className=" text-bg-warning">
-              IGST
+              IGST in %
             </th>
             <th scope="col" className=" text-bg-warning">
               GR Amount

@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import ShopTable from "./shop/ShopTable";
 import { useNavigate } from "react-router-dom";
+import ShopContext from "../contexts/shop/shopContext";
 const Home = () => {
+  const context = useContext(ShopContext);
+  const { setLoaded } = context;
+
   const navigate = useNavigate();
   return (
     <>
@@ -20,7 +24,10 @@ const Home = () => {
           <div className="col-12 col-sm-6 col-md-4 mb-3">
             <button
               className="btn btn-warning btn-lg btn-block"
-              onClick={() => navigate("/shop")}
+              onClick={() => {
+                navigate("/shop");
+                setLoaded(false);
+              }}
             >
               Press to Start
             </button>
@@ -55,7 +62,10 @@ const Home = () => {
             </table>
             <button
               className="col-span-5 container mt-4 btn btn-outline-warning btn-lg"
-              onClick={() => navigate("/shop")}
+              onClick={() => {
+                navigate("/shop");
+                setLoaded(false);
+              }}
             >
               Go to Access The Ledger
             </button>

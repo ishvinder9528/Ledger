@@ -7,9 +7,9 @@ const Navbar = () => {
   const location = useLocation();
 
   const context = useContext(ShopContext);
-  const { isEdit, setIsEdit } = context;
+  const { isEdit, setIsEdit, setLoaded } = context;
   const billContext = useContext(BillContext);
-  const { setShopId,shopId } = billContext;
+  const { setShopId, shopId } = billContext;
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate("/shop");
@@ -45,19 +45,33 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/shop" onClick={()=>setShopId("")}>
+                <Link
+                  className="nav-link"
+                  to="/shop"
+                  onClick={() => setShopId("")}
+                >
                   Shop
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/all" onClick={()=>setShopId("")}>
+                <Link
+                  className="nav-link"
+                  to="/all"
+                  onClick={() => setShopId("")}
+                >
                   All Bills
                 </Link>
               </li>
             </ul>
             <form className="d-flex" onSubmit={handleSubmit}>
               {location.pathname === "/" && (
-                <button className="btn btn-warning mx-1" type="submit">
+                <button
+                  className="btn btn-warning mx-1"
+                  type="submit"
+                  onClick={() => {
+                    setLoaded(false);
+                  }}
+                >
                   Database
                 </button>
               )}
