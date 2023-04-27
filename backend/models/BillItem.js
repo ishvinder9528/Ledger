@@ -8,7 +8,6 @@ const billItemSchema = new Schema({
   },
   sno: {
     type: Number,
-    unique: true,
   },
   qty: {
     type: Number,

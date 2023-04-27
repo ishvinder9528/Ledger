@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useContext, createRef } from "react";
+import React, { useEffect, useContext, createRef } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import BillItemModal from "../billItem/BillItemModal";
 import DeleteBillModal from "./DeleteBillModal";
+import Spinner from "../Spinner";
 const BillsTable = () => {
   const openDeleteBillModal = createRef(null);
   const closeDeleteBillModal = createRef(null);
@@ -15,21 +16,16 @@ const BillsTable = () => {
     setBillId,
     setBill_Id,
   } = context;
-  const [bills, setBills] = useState([]);
+
   const showBillItemModal = createRef(null);
   const closeBillItemModal = createRef(null);
 
   useEffect(() => {
     if (!loaded) {
       getBill(shopId);
-      getBill(shopId);
-      getBill(shopId);
-    } else {
-      setBills(billsData);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded, getBill, shopId, billsData]);
+  }, [loaded]);
   return (
     <div className="mx-1 table-responsive">
       <table className="table">
@@ -83,8 +79,14 @@ const BillsTable = () => {
           </tr>
         </thead>
         <tbody>
-          {bills && bills.length > 0 ? (
-            bills.map((bill) => {
+          {!loaded ? (
+            <tr>
+              <td colSpan={15} className="text-center">
+                <Spinner />
+              </td>
+            </tr>
+          ) : billsData && billsData.length > 0 ? (
+            billsData.map((bill) => {
               return (
                 <tr key={bill._id}>
                   <th scope="row">{bill.billid}</th>

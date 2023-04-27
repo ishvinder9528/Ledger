@@ -14,6 +14,7 @@ const EditBillForm = () => {
     isEdit,
     editBill,
     setIsEdit,
+    setLoaded
   } = context;
 
   useEffect(() => {
@@ -114,6 +115,8 @@ const EditBillForm = () => {
       ...editBillData,
       date: date,
     });
+    setLoaded(false)
+    
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -148,7 +151,7 @@ const EditBillForm = () => {
   return (
     <div className="mx-3 border border-success mb-3">
       <div className="p-4">
-        <h2 className=" text-center text-success mb-4">Edit Bill</h2>
+        <h2 className=" text-center text-success mb-4">Edit Bill {`${editBillData.billid}`}</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3 ">
             <div className="row">
@@ -287,7 +290,7 @@ const EditBillForm = () => {
                 <ReactDatePicker
                   type="date"
                   className="form-control"
-                  value={new Date(editBillData.date).toLocaleDateString()}
+                  value={new Date(editBillData.date).toLocaleDateString('en-US', {day: '2-digit', month: '2-digit', year: 'numeric'})}
                   dateFormat="dd/MM/yyyy"
                   name="date"
                   onChange={handleDateChange}

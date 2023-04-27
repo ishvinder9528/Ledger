@@ -85,7 +85,7 @@ router.post("/:shopid/add/:billid", async (req, res) => {
 });
 
 // Request 3: Get all the bills of particular shop GET => http://localhost:5000/bills/allbills/:shopid
-router.get("/allbills/:shopid", async (req, res) => {
+router.get("/allbill/:shopid", async (req, res) => {
   try {
     // check Shop, it exists or not
     const shop = await Shop.findById(req.params.shopid);

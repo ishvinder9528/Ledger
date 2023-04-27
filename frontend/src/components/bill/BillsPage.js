@@ -7,12 +7,25 @@ import EditBillForm from "./EditBillFrom";
 
 const BillsPage = () => {
   const context = useContext(BillContext);
-  const { setLoaded, shopName, isEdit, setIsEdit, setEditBillData } =
-    context;
-  useEffect(() => {
-    console.log(isEdit);
-  }, [isEdit]);
+
+  const {
+    setLoaded,
+    shopName,
+    isEdit,
+    setIsEdit,
+    shopId,
+    setEditBillData,
+    setBillsData,
+  } = context;
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (shopName === "" && shopId === "") {
+      navigate("/shop");
+    }
+  });
+
   return (
     <div className="mt-5">
       <div className="row my-4">
@@ -22,6 +35,7 @@ const BillsPage = () => {
             onClick={() => {
               navigate("/shop");
               setLoaded(false);
+              setBillsData([]);
               setIsEdit({
                 value: false,
                 id: "",

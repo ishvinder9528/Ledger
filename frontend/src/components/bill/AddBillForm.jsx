@@ -4,7 +4,7 @@ import ReactDatePicker from "react-datepicker";
 
 const AddBillForm = () => {
   const context = useContext(BillContext);
-  const { shopId, addBill, shopName, getBill } = context;
+  const { shopId, addBill, shopName, setLoaded } = context;
   const [newBill, setNewBill] = useState({
     shopname: shopName,
     billid: "A-",
@@ -124,11 +124,7 @@ const AddBillForm = () => {
       status: "Paid",
       date: new Date(),
     });
-    getBill(shopId);
-    getBill(shopId);
-    getBill(shopId);
-    getBill(shopId);
-    getBill(shopId);
+    setLoaded(false);
   };
 
   return (

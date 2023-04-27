@@ -26,14 +26,12 @@ const BillState = (props) => {
   // Get All bill of particular shop
   const getBill = async (id) => {
     try {
-      const response = await fetch(`${host}/bills/allbills/${id}`, {
+      const response = await fetch(`${host}/bills/allbill/${id}`, {
         method: "GET",
       });
       if (response.ok) {
         const data = await response.json();
-
         setBillsData(data.bills);
-
         setLoaded(true);
       }
     } catch (error) {
@@ -87,13 +85,13 @@ const BillState = (props) => {
       console.log(response);
       if (response.ok) {
         const data = await response.json();
-
         if (Array.isArray(billsData)) {
           setBillsData(billsData.concat(data));
         } else {
           setBillsData([data]);
         }
         showAlert("Bill added Successfully", "success");
+        getBill(shopId)
       }
     } catch (error) {
       console.log(error);
@@ -260,6 +258,7 @@ const BillState = (props) => {
           shopId,
           setShopId,
           billsData,
+          setBillsData,
           getBill,
           loaded,
           setLoaded,

@@ -7,11 +7,9 @@ const AllBills = () => {
   const {
     shopId,
     getAll,
-    billsData,
     loaded,
     setLoaded,
     setShopId,
-
     setBillId,
     setBill_Id,
   } = context;
@@ -26,16 +24,9 @@ const AllBills = () => {
   useEffect(() => {
     if (!loaded) {
       getAll(shopId);
-      getAll(shopId);
-      getAll(shopId);
-    } else {
-      setBills(billsData);
-      setBills(billsData);
-      setBills(billsData);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded, getAll, shopId, billsData]);
+  }, [loaded]);
 
   const filteredBills =
     loaded && bills
