@@ -4,7 +4,7 @@ import BillContext from "../../contexts/bill/billContext";
 
 const DeleteBillModal = (props) => {
   const billContext = useContext(BillContext);
-  const { shopId, bill_Id, setBill_Id, deleteBill } = billContext;
+  const { shopId, bill_Id, setBill_Id, deleteBill,setLoaded } = billContext;
   return (
     <div>
       {/* <!-- Button trigger modal --> */}
@@ -60,6 +60,7 @@ const DeleteBillModal = (props) => {
                 onClick={() => {
                   deleteBill(shopId, bill_Id);
                   setBill_Id("");
+                  setLoaded(false)
                   props.closeDeleteBillModal.current.click();
                 }}
               >

@@ -23,7 +23,6 @@ const AddBillForm = () => {
   useEffect(() => {
     console.log(shopName);
     console.log(shopId);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

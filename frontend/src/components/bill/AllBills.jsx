@@ -2,18 +2,22 @@ import React, { useEffect, useState, useContext, createRef } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import { useNavigate } from "react-router-dom";
 import BillItemModal from "../billItem/BillItemModal";
+import Spinner from "../Spinner";
 const AllBills = () => {
   const context = useContext(BillContext);
   const {
     shopId,
     getAll,
-    loaded,
+    allLoad,
+    billsData,
+    setBillsData,
+    setAllLoad,
     setLoaded,
     setShopId,
     setBillId,
     setBill_Id,
   } = context;
-  const [bills, setBills] = useState([]);
+
   const [searchText, setSearchText] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -22,15 +26,16 @@ const AllBills = () => {
   const closeBillItemModal = createRef(null);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!loaded) {
+    console.log("callled");
+    if (!allLoad) {
       getAll(shopId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded]);
+  }, [allLoad]);
 
   const filteredBills =
-    loaded && bills
-      ? bills.filter((bill) => {
+    allLoad && billsData
+      ? billsData.filter((bill) => {
           const billDate = new Date(bill.date);
           const isAfterFromDate =
             !fromDate || billDate >= new Date(fromDate + "T00:00:00");
@@ -43,7 +48,7 @@ const AllBills = () => {
             isBeforeToDate
           );
         })
-      : bills;
+      : billsData;
 
   const handleSort = () => {
     const sortedBills = [...filteredBills].sort((a, b) => {
@@ -56,7 +61,7 @@ const AllBills = () => {
       }
     });
     setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-    setBills(sortedBills);
+    setBillsData(sortedBills);
   };
 
   return (
@@ -69,6 +74,7 @@ const AllBills = () => {
               className="btn btn-outline-warning mx-2"
               onClick={() => {
                 navigate("/shop");
+                setAllLoad(false);
                 setLoaded(false);
                 setShopId("");
               }}
@@ -187,7 +193,13 @@ const AllBills = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredBills && filteredBills.length > 0 ? (
+            {!allLoad ? (
+              <tr>
+                <td colSpan={15} className="text-center">
+                  <Spinner />
+                </td>
+              </tr>
+            ) : filteredBills && filteredBills.length > 0 ? (
               filteredBills.map((bill) => {
                 return (
                   <>

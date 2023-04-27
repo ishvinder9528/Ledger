@@ -7,14 +7,13 @@ const EditBillForm = () => {
   const {
     shopId,
     shopName,
-    getBill,
     editBillData,
     setEditBillData,
     getBillData,
     isEdit,
     editBill,
     setIsEdit,
-    setLoaded
+    setLoaded,
   } = context;
 
   useEffect(() => {
@@ -44,9 +43,10 @@ const EditBillForm = () => {
 
     if (name === "cgst") {
       totalAmount =
-      parseFloat(editBillData.amount) +
+        parseFloat(editBillData.amount) +
         (parseFloat(editBillData.amount) * 2 * parseFloat(value)) / 100 +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.isgt)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.isgt)) /
+          100 +
         (parseFloat(editBillData.amount) * parseFloat(value)) / 100 -
         parseFloat(editBillData.gramount);
       setEditBillData({
@@ -57,10 +57,12 @@ const EditBillForm = () => {
       });
     } else if (name === "igst") {
       totalAmount =
-               parseFloat(editBillData.amount) +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.cgst)) / 100 +
+        parseFloat(editBillData.amount) +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.cgst)) /
+          100 +
         (parseFloat(editBillData.amount) * parseFloat(value)) / 100 +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.sgst)) / 100 -
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.sgst)) /
+          100 -
         parseFloat(editBillData.gramount);
       setEditBillData({
         ...editBillData,
@@ -71,7 +73,8 @@ const EditBillForm = () => {
       totalAmount =
         parseFloat(editBillData.amount) +
         (parseFloat(editBillData.amount) * parseFloat(value)) / 100 +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) /
+          100 +
         (parseFloat(editBillData.amount) * parseFloat(value)) / 100 -
         parseFloat(editBillData.gramount);
       setEditBillData({
@@ -82,9 +85,12 @@ const EditBillForm = () => {
     } else if (name === "amount") {
       totalAmount =
         parseFloat(value) +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.cgst)) / 100 +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) / 100 +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.sgst)) / 100 -
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.cgst)) /
+          100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) /
+          100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.sgst)) /
+          100 -
         parseFloat(editBillData.gramount);
       setEditBillData({
         ...editBillData,
@@ -93,10 +99,13 @@ const EditBillForm = () => {
       });
     } else if (name === "gramount") {
       totalAmount =
-       parseFloat(editBillData.amount) +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.cgst)) / 100 +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) / 100 +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.sgst)) / 100 -
+        parseFloat(editBillData.amount) +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.cgst)) /
+          100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) /
+          100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.sgst)) /
+          100 -
         parseFloat(value);
       setEditBillData({
         ...editBillData,
@@ -115,43 +124,37 @@ const EditBillForm = () => {
       ...editBillData,
       date: date,
     });
-    setLoaded(false)
-    
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(shopName);
-    console.log(shopId);
-    console.log(editBillData);
     editBill(shopId, isEdit.id, editBillData);
-    getBill(shopId);
-    getBill(shopId);
-    getBill(shopId);
-    getBill(shopId);
+    setLoaded(false);
     setEditBillData({
       shopname: shopName,
-      billid: "A-",
+      billid: "",
       billno: "",
-      cgst: 0,
-      sgst: 0,
-      igst: 0,
-      gramount: 0,
-      balanceleft: 0,
-      amount: 0,
-      totalamount: 0,
-      status: "Paid",
+      cgst: "",
+      sgst: "",
+      igst: "",
+      gramount: "",
+      balanceleft: "",
+      amount: "",
+      totalamount: "",
+      status: "",
       date: new Date(),
     });
     setIsEdit({
-      value:false,
-      id:''
+      value: false,
+      id: "",
     });
   };
 
   return (
     <div className="mx-3 border border-success mb-3">
       <div className="p-4">
-        <h2 className=" text-center text-success mb-4">Edit Bill {`${editBillData.billid}`}</h2>
+        <h2 className=" text-center text-success mb-4">
+          Edit Bill {`${editBillData.billid}`}
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3 ">
             <div className="row">
@@ -290,7 +293,10 @@ const EditBillForm = () => {
                 <ReactDatePicker
                   type="date"
                   className="form-control"
-                  value={new Date(editBillData.date).toLocaleDateString('en-US', {day: '2-digit', month: '2-digit', year: 'numeric'})}
+                  value={new Date(editBillData.date).toLocaleDateString(
+                    "en-US",
+                    { day: "2-digit", month: "2-digit", year: "numeric" }
+                  )}
                   dateFormat="dd/MM/yyyy"
                   name="date"
                   onChange={handleDateChange}

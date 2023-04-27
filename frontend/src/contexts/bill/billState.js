@@ -4,6 +4,8 @@ const BillState = (props) => {
   const [shopId, setShopId] = useState("");
   const [billsData, setBillsData] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [allLoad, setAllLoad] = useState(false);
+  const [itemLoad, setItemLoad] = useState(false);
   const [alert, setAlert] = useState(null);
   const [shopName, setShopName] = useState("");
   const [isEdit, setIsEdit] = useState({ value: false, id: "" });
@@ -12,6 +14,8 @@ const BillState = (props) => {
   const [bill_Id, setBill_Id] = useState("");
   const [billItems, setBillItems] = useState([]);
   const [billItemLoaded, setBillItemLoaded] = useState(false);
+  
+
   const host = "https://ledgerbackend.onrender.com";
   const showAlert = (message, type) => {
     setAlert({
@@ -33,6 +37,8 @@ const BillState = (props) => {
         const data = await response.json();
         setBillsData(data.bills);
         setLoaded(true);
+      } else {
+        showAlert("Opps,Something went wrong", "danger");
       }
     } catch (error) {
       showAlert("Opps, Something went wrong", "danger");
@@ -48,7 +54,9 @@ const BillState = (props) => {
       if (response.ok) {
         const data = await response.json();
         setBillsData(data.bills);
-        setLoaded(true);
+        setAllLoad(true);
+      } else {
+        showAlert("Opps,Something went wrong", "danger");
       }
     } catch (error) {
       showAlert("Opps, Something went wrong", "danger");
@@ -64,7 +72,10 @@ const BillState = (props) => {
       if (response.ok) {
         const data = billsData.filter((bill) => bill._id !== billid);
         setBillsData(data);
+        getBill(shopid);
         showAlert("Bill deleted Successfully", "success");
+      } else {
+        showAlert("Opps,Something went wrong", "danger");
       }
     } catch (error) {
       showAlert("Opps, Something went wrong", "danger");
@@ -74,7 +85,6 @@ const BillState = (props) => {
   //   Add Bill to Shop
   const addBill = async (shopid, bill) => {
     try {
-      console.log(shopid);
       const response = await fetch(`${host}/bills/add/${shopid}`, {
         method: "POST",
         headers: {
@@ -82,7 +92,6 @@ const BillState = (props) => {
         },
         body: JSON.stringify(bill),
       });
-      console.log(response);
       if (response.ok) {
         const data = await response.json();
         if (Array.isArray(billsData)) {
@@ -90,8 +99,10 @@ const BillState = (props) => {
         } else {
           setBillsData([data]);
         }
+        getBill(shopid);
         showAlert("Bill added Successfully", "success");
-        getBill(shopId)
+      } else {
+        showAlert("BillID Already Exist, And It Should Not be Same", "danger");
       }
     } catch (error) {
       console.log(error);
@@ -167,11 +178,12 @@ const BillState = (props) => {
           method: "GET",
         }
       );
+      console.log(response);
       if (response.ok) {
         const data = await response.json();
         console.log(data.billItems);
         setBillItems(data.billItems);
-        setBillItemLoaded(true);
+        setItemLoad(true);
       }
     } catch (error) {
       console.log(error);
@@ -233,12 +245,9 @@ const BillState = (props) => {
   // get all billItems without shopid
   const getBillItemsWS = async (billid) => {
     try {
-      const response = await fetch(
-        `${host}/bills/billitems/${billid}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await fetch(`${host}/bills/billitems/${billid}`, {
+        method: "GET",
+      });
       if (response.ok) {
         const data = await response.json();
         console.log(data.billItems);
@@ -261,6 +270,10 @@ const BillState = (props) => {
           setBillsData,
           getBill,
           loaded,
+          itemLoad,
+          allLoad,
+          setAllLoad,
+          setItemLoad,
           setLoaded,
           showAlert,
           alert,
@@ -286,7 +299,8 @@ const BillState = (props) => {
           editBill,
           addBillItem,
           deleteBillItem,
-          getBillItemsWS
+          getBillItemsWS,
+     
         }}
       >
         {props.children}

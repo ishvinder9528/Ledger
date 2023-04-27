@@ -9,7 +9,7 @@ const Navbar = () => {
   const context = useContext(ShopContext);
   const { isEdit, setIsEdit, setLoaded } = context;
   const billContext = useContext(BillContext);
-  const { setShopId, shopId } = billContext;
+  const { setShopId, setAllLoad } = billContext;
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate("/shop");
@@ -48,7 +48,10 @@ const Navbar = () => {
                 <Link
                   className="nav-link"
                   to="/shop"
-                  onClick={() => setShopId("")}
+                  onClick={() => {
+                    setShopId("");
+                    setAllLoad(false)
+                  }}
                 >
                   Shop
                 </Link>
@@ -57,7 +60,10 @@ const Navbar = () => {
                 <Link
                   className="nav-link"
                   to="/all"
-                  onClick={() => setShopId("")}
+                  onClick={() => {
+                    setShopId("");
+                    setAllLoad(false)
+                  }}
                 >
                   All Bills
                 </Link>

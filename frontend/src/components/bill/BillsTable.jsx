@@ -15,12 +15,16 @@ const BillsTable = () => {
     setIsEdit,
     setBillId,
     setBill_Id,
+    bill_Id,
+    billId,
+    setItemLoad,
   } = context;
 
   const showBillItemModal = createRef(null);
   const closeBillItemModal = createRef(null);
 
   useEffect(() => {
+    setItemLoad(false);
     if (!loaded) {
       getBill(shopId);
     }
@@ -136,9 +140,12 @@ const BillsTable = () => {
                       className="fa-solid fa-hand-pointer fa-lg px-2"
                       style={{ color: "#0aea06" }}
                       onClick={() => {
-                        showBillItemModal.current.click();
                         setBillId(bill.billid);
                         setBill_Id(bill._id);
+                        console.log(bill_Id, billId);
+                        setItemLoad(false);
+                       
+                        showBillItemModal.current.click();
                       }}
                     ></i>
                   </td>

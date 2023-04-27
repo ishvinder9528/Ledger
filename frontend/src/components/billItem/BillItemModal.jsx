@@ -7,27 +7,28 @@ import { useLocation } from "react-router-dom";
 const BillItemModal = (props) => {
   const [isAdd, setIsAdd] = useState(false);
   const context = useContext(BillContext);
-  const location = useLocation()
+  const location = useLocation();
   const {
     shopName,
     billId,
-
-    billItemLoaded,
+    itemLoad,
+    billItems,
+    setItemLoad,
     shopId,
     bill_Id,
     getBillItems,
-    setBillItemLoaded,
+    setBillItems,
   } = context;
 
   useEffect(() => {
     console.log(location.pathname);
-    getBillItems(shopId, bill_Id);
-    getBillItems(shopId, bill_Id);
-    if (billItemLoaded) {
-      setBillItemLoaded(false);
+    console.log(itemLoad);
+    if (!itemLoad) {
+      getBillItems(shopId, bill_Id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bill_Id, billItemLoaded]);
+  }, [itemLoad, billItems]);
+
   return (
     <div>
       {/* <!-- Button trigger modal --> */}
@@ -62,20 +63,25 @@ const BillItemModal = (props) => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                onClick={() => {
+                  setItemLoad(false);
+                  setBillItems([]);
+                }}
               ></button>
             </div>
             <div className="modal-body">
               <BillItemTable />
-              {location.pathname ==='/all' ?"" :(
-
-              <div
-                className="btn btn-warning"
-                onClick={() => {
-                  setIsAdd(true);
-                }}
-              >
-                +
-              </div>
+              {location.pathname === "/all" ? (
+                ""
+              ) : (
+                <div
+                  className="btn btn-warning"
+                  onClick={() => {
+                    setIsAdd(true);
+                  }}
+                >
+                  +
+                </div>
               )}
               {isAdd && <AddBillItemForm setIsAdd={setIsAdd} />}
             </div>
@@ -85,10 +91,22 @@ const BillItemModal = (props) => {
                 className="btn btn-secondary"
                 ref={props.closeBillItemModal}
                 data-bs-dismiss="modal"
+                onClick={() => {
+                  setItemLoad(false);
+                  setBillItems([]);
+                }}
               >
                 Close
               </button>
-              <button type="button" className="btn btn-warning">
+              <button
+                type="button"
+                className="btn btn-warning"
+                ref={props.closeBillItemModal}
+                onClick={() => {
+                  setItemLoad(false);
+                  setBillItems([]);
+                }}
+              >
                 Save
               </button>
             </div>

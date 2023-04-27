@@ -1,24 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import BillContext from "../../contexts/bill/billContext";
+import Spinner from "../Spinner";
 
 const BillItemTable = () => {
   const context = useContext(BillContext);
-  const { billItems, deleteBillItem, shopId, bill_Id } = context;
+  const { billItems, deleteBillItem, shopId, bill_Id, itemLoad } = context;
 
-// Sort billItems by sno in ascending order and create a new array to preserve the original
-var sortedBillItems = [];
-if (billItems && billItems.length !== 0) {
-  sortedBillItems = billItems.slice().sort((a, b) => a.sno - b.sno);
-}
-// Calculate total amount by summing netamount of all bill items
-var totalAmount = 0;
-if (sortedBillItems && sortedBillItems.length !== 0) {
-  totalAmount = sortedBillItems.reduce((acc, curr) => {
-    // Add a check for the netamount property
-    return acc + (curr.netamount ? curr.netamount : 0);
-  }, 0);
-}
-
+  var sortedBillItems = [];
+  // Sort billItems by sno in ascending order and create a new array to preserve the original
+  if (billItems && billItems.length !== 0) {
+    sortedBillItems = billItems.slice().sort((a, b) => a.sno - b.sno);
+  }
+  // Calculate total amount by summing netamount of all bill items
+  var totalAmount = 0;
+  if (sortedBillItems && sortedBillItems.length !== 0) {
+    totalAmount = sortedBillItems.reduce((acc, curr) => {
+      // Add a check for the netamount property
+      return acc + (curr.netamount ? curr.netamount : 0);
+    }, 0);
+  }
 
   return (
     <div className="table-responsive">
@@ -55,7 +55,13 @@ if (sortedBillItems && sortedBillItems.length !== 0) {
           </tr>
         </thead>
         <tbody>
-          {sortedBillItems && sortedBillItems.length !== 0 ? (
+          {!itemLoad ? (
+            <tr>
+              <td colSpan={9} className="text-center">
+                <Spinner />
+              </td>
+            </tr>
+          ) : sortedBillItems && sortedBillItems.length !== 0 ? (
             sortedBillItems.map((billItem) => {
               return (
                 <tr key={billItem._id}>
