@@ -1,15 +1,16 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import Spinner from "../Spinner";
 
 const BillItemTable = () => {
   const context = useContext(BillContext);
-  const { billItems, deleteBillItem, shopId, bill_Id, itemLoad } = context;
+  const { billItems, deleteBillItem, shopId, bill_Id, itemLoad, setItemLoad } =
+    context;
 
   var sortedBillItems = [];
-  // Sort billItems by sno in ascending order and create a new array to preserve the original
+  // Sort billItems by snum in ascending order and create a new array to preserve the original
   if (billItems && billItems.length !== 0) {
-    sortedBillItems = billItems.slice().sort((a, b) => a.sno - b.sno);
+    sortedBillItems = billItems.slice().sort((a, b) => a.snum - b.snum);
   }
   // Calculate total amount by summing netamount of all bill items
   var totalAmount = 0;
@@ -65,7 +66,7 @@ const BillItemTable = () => {
             sortedBillItems.map((billItem) => {
               return (
                 <tr key={billItem._id}>
-                  <td>{billItem.sno}</td>
+                  <td>{billItem.snum}</td>
                   <td>{billItem.itemdesc}</td>
                   <td>{billItem.qty}</td>
                   <td>{billItem.price}</td>
@@ -80,6 +81,7 @@ const BillItemTable = () => {
                       style={{ color: "red" }}
                       onClick={() => {
                         deleteBillItem(shopId, bill_Id, billItem._id);
+                        setItemLoad(false);
                       }}
                     ></i>
                   </td>

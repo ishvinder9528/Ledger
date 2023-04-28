@@ -18,6 +18,7 @@ const BillItemModal = (props) => {
     bill_Id,
     getBillItems,
     setBillItems,
+    setBill_Id,
   } = context;
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const BillItemModal = (props) => {
       getBillItems(shopId, bill_Id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemLoad, billItems]);
+  }, [itemLoad, billItems, props.showBillItemModal]);
 
   return (
     <div>
@@ -66,6 +67,7 @@ const BillItemModal = (props) => {
                 onClick={() => {
                   setItemLoad(false);
                   setBillItems([]);
+                  setBill_Id("");
                 }}
               ></button>
             </div>
@@ -94,6 +96,7 @@ const BillItemModal = (props) => {
                 onClick={() => {
                   setItemLoad(false);
                   setBillItems([]);
+                  setBill_Id("");
                 }}
               >
                 Close
@@ -101,13 +104,12 @@ const BillItemModal = (props) => {
               <button
                 type="button"
                 className="btn btn-warning"
-                ref={props.closeBillItemModal}
                 onClick={() => {
                   setItemLoad(false);
                   setBillItems([]);
                 }}
               >
-                Save
+                Refresh
               </button>
             </div>
           </div>

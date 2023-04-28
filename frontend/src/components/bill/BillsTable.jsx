@@ -18,6 +18,7 @@ const BillsTable = () => {
     bill_Id,
     billId,
     setItemLoad,
+   
   } = context;
 
   const showBillItemModal = createRef(null);
@@ -144,7 +145,7 @@ const BillsTable = () => {
                         setBill_Id(bill._id);
                         console.log(bill_Id, billId);
                         setItemLoad(false);
-                       
+
                         showBillItemModal.current.click();
                       }}
                     ></i>
@@ -163,6 +164,7 @@ const BillsTable = () => {
         openDeleteBillModal={openDeleteBillModal}
         closeDeleteBillModal={closeDeleteBillModal}
       />
+
       <BillItemModal
         showBillItemModal={showBillItemModal}
         closeBillItemModal={closeBillItemModal}

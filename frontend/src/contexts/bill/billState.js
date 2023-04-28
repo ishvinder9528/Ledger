@@ -14,7 +14,7 @@ const BillState = (props) => {
   const [bill_Id, setBill_Id] = useState("");
   const [billItems, setBillItems] = useState([]);
   const [billItemLoaded, setBillItemLoaded] = useState(false);
-  
+  const [showBillModal, setShowBillModal] = useState(false)
 
   const host = "https://ledgerbackend.onrender.com";
   const showAlert = (message, type) => {
@@ -208,11 +208,14 @@ const BillState = (props) => {
 
         if (Array.isArray(billItems)) {
           setBillItems(billItems.concat(billitem));
+          getBillItems(shopid, billid)
         } else {
           setBillItems([billitem]);
+          getBillItems(shopid, billid)
         }
-        showAlert("Bill added Successfully", "success");
+        showAlert("BillItem added Successfully", "success");
       } else {
+        showAlert("Something went wrong", "error");
       }
     } catch (error) {
       console.log(error);
@@ -234,7 +237,8 @@ const BillState = (props) => {
           (billitem) => billitem._id !== billitemid
         );
         setBillItems(data);
-        showAlert("Bill deleted Successfully", "success");
+        getBillItems(shopid, billid)
+        showAlert("BillItem deleted Successfully", "success");
       }
     } catch (error) {
       console.log(error);
@@ -253,6 +257,7 @@ const BillState = (props) => {
         console.log(data.billItems);
         setBillItems(data.billItems);
         setBillItemLoaded(true);
+
       }
     } catch (error) {
       console.log(error);
@@ -300,7 +305,7 @@ const BillState = (props) => {
           addBillItem,
           deleteBillItem,
           getBillItemsWS,
-     
+          showBillModal, setShowBillModal
         }}
       >
         {props.children}

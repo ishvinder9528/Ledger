@@ -57,11 +57,12 @@ router.post("/:shopid/add/:billid", async (req, res) => {
       return res.json({ error: "Bills Not Found" });
     }
 
+    console.log(req.body);
     const billItem = new BillItem({
-      sno: req.body.sno,
       qty: req.body.qty,
-      itemdesc: req.body.itemdesc,
+      snum: req.body.snum,
       price: req.body.price,
+      itemdesc: req.body.itemdesc,
       amount: req.body.amount,
       discount: req.body.discount,
       netamount: req.body.netamount,
@@ -71,7 +72,8 @@ router.post("/:shopid/add/:billid", async (req, res) => {
     });
 
     const savedBillItem = await billItem.save();
-
+    console.log("billItem =",billItem);
+    console.log(savedBillItem);
     if (savedBillItem) {
       console.log("Add BillItem Successfully", savedBillItem);
       res.status(200).json({ message: "Add Successfully", savedBillItem });
@@ -80,7 +82,7 @@ router.post("/:shopid/add/:billid", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" ,error});
   }
 });
 

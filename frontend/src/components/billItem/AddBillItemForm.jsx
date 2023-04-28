@@ -3,9 +3,9 @@ import BillContext from "../../contexts/bill/billContext";
 
 const AddBillItemForm = (props) => {
   const context = useContext(BillContext);
-  const { shopId, bill_Id, addBillItem, getBillItems } = context;
+  const { shopId, bill_Id, addBillItem, setItemLoad } = context;
   const [billitem, setBillItem] = useState({
-    sno: "",
+    snum: "",
     qty: 0,
     price: 0,
     amount: "",
@@ -61,8 +61,9 @@ const AddBillItemForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addBillItem(shopId, bill_Id, billitem);
+    setItemLoad(false);
     setBillItem({
-      sno: "",
+      snum: "",
       qty: 0,
       price: 0,
       amount: "",
@@ -71,10 +72,6 @@ const AddBillItemForm = (props) => {
       itemdesc: "",
       gst: "",
     });
-    getBillItems(shopId, bill_Id);
-    getBillItems(shopId, bill_Id);
-    getBillItems(shopId, bill_Id);
-    getBillItems(shopId, bill_Id);
   };
 
   return (
@@ -83,19 +80,36 @@ const AddBillItemForm = (props) => {
         <div className="row">
           <div className="col-md-1">
             <div className="mb-3">
-              <label htmlfor="sno" className="form-label">
+              <label htmlfor="snum" className="form-label">
                 Sno.
               </label>
               <input
                 type="number"
                 className="form-control"
-                id="sno"
-                name="sno"
-                value={billitem.sno}
+                id="snum"
+                name="snum"
+                value={billitem.snum}
                 onChange={onChange}
               />
             </div>
           </div>
+
+          <div className="col-md-2">
+            <div className="mb-3">
+              <label htmlfor="itemdesc" className="form-label">
+                Item Desc.
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="itemdesc"
+                name="itemdesc"
+                value={billitem.itemdesc}
+                onChange={onChange}
+              />
+            </div>
+          </div>
+
           <div className="col-md-1">
             <div className="mb-3">
               <label htmlfor="qty" className="form-label">
@@ -170,7 +184,7 @@ const AddBillItemForm = (props) => {
                 className="form-control"
                 id="amount"
                 name="amount"
-                disabled="true"
+                disabled={true}
                 value={billitem.amount}
                 onChange={onChange}
               />
@@ -187,24 +201,8 @@ const AddBillItemForm = (props) => {
                 className="form-control"
                 id="netamount"
                 name="netamount"
-                disabled="true"
+                disabled={true}
                 value={billitem.netamount}
-                onChange={onChange}
-              />
-            </div>
-          </div>
-
-          <div className="col-md-2">
-            <div className="mb-3">
-              <label htmlfor="itemdesc" className="form-label">
-                Item Desc.
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="itemdesc"
-                name="itemdesc"
-                value={billitem.itemdesc}
                 onChange={onChange}
               />
             </div>
