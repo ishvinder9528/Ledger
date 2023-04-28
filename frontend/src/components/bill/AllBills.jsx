@@ -19,12 +19,14 @@ const AllBills = () => {
   } = context;
 
   const [searchText, setSearchText] = useState("");
+  const [searchBillId, setSearchBillId] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [sortDirection, setSortDirection] = useState("asc");
   const showBillItemModal = createRef(null);
   const closeBillItemModal = createRef(null);
   const navigate = useNavigate();
+
   useEffect(() => {
     console.log("callled");
     if (!allLoad) {
@@ -44,6 +46,7 @@ const AllBills = () => {
           return (
             bill.shopname &&
             bill.shopname.toLowerCase().includes(searchText.toLowerCase()) &&
+            bill.billid.toLowerCase().includes(searchBillId.toLowerCase()) &&
             isAfterFromDate &&
             isBeforeToDate
           );
@@ -94,7 +97,7 @@ const AllBills = () => {
 
         <div className="container my-5">
           <div className="row align-items-center">
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label htmlfor="search" className="form-label">
                 Shop Name
               </label>
@@ -114,7 +117,27 @@ const AllBills = () => {
                 </button>
               </div>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
+              <label htmlfor="searchbillid" className="form-label">
+                Bill ID
+              </label>
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="searchbillid"
+                  name="searchbillid"
+                  placeholder="Search by Bill ID"
+                  onChange={(e) => {
+                    setSearchBillId(e.target.value);
+                  }}
+                />
+                <button className="btn btn-warning" type="button">
+                  <i className="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+            <div className="col-md-3">
               <label htmlfor="fromDate" className="form-label">
                 From Date
               </label>
@@ -128,7 +151,7 @@ const AllBills = () => {
                 }}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
               <label htmlfor="toDate" className="form-label">
                 To Date
               </label>

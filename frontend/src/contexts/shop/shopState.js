@@ -13,6 +13,7 @@ const ShopState = (props) => {
     value: false,
     id: "",
   });
+
   const [editShopData, setEditShopData] = useState({
     name: "",
     gstno: "",
@@ -20,6 +21,7 @@ const ShopState = (props) => {
     phone: "",
     pendingAmount: "",
   });
+  
   const showAlert = (message, type) => {
     setAlert({
       msg: message,
