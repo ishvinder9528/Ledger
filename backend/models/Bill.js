@@ -47,10 +47,20 @@ const billSchema = new Schema(
       type: Number,
       default: 0,
     },
-    date:{
-      type:Date,
+    date: {
+      type: Date,
       required: true,
+    },
+    roundoffamount: {
+      type: Number,
+    },
+    aftergramount: {
+      type: Number,
+    },
+    grgst:{
+      type:Number
     }
+
   },
   { timestamps: true }
 );

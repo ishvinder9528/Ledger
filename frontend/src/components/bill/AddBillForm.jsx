@@ -18,6 +18,9 @@ const AddBillForm = () => {
     totalamount: 0,
     status: "Paid",
     date: new Date(),
+    aftergramount: 0,
+    roundoffamount: 0,
+    grgst: 0,
   });
 
   useEffect(() => {
@@ -29,67 +32,93 @@ const AddBillForm = () => {
   const onChange = (e) => {
     const { name, value } = e.target;
     let totalAmount = 0;
+    let totalAfterGrAmount = 0;
 
     if (name === "cgst") {
+      totalAfterGrAmount =
+        parseFloat(newBill.amount) -
+        parseFloat(newBill.gramount) -
+        (parseFloat(newBill.gramount) * parseFloat(newBill.grgst)) / 100;
       totalAmount =
-        parseFloat(newBill.amount) +
-        (parseFloat(newBill.amount) * 2 * parseFloat(value)) / 100 +
-        (parseFloat(newBill.amount) * parseFloat(newBill.isgt)) / 100 +
-        (parseFloat(newBill.amount) * parseFloat(value)) / 100 -
-        parseFloat(newBill.gramount);
+        totalAfterGrAmount +
+        (parseFloat(newBill.amount) * parseFloat(value)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(value)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(newBill.igst)) / 100;
       setNewBill({
         ...newBill,
         sgst: value,
         cgst: value,
         totalamount: totalAmount.toFixed(2),
+        aftergramount: totalAfterGrAmount,
+        roundoffamount: Math.round(totalAmount),
       });
     } else if (name === "igst") {
+      totalAfterGrAmount =
+        parseFloat(newBill.amount) -
+        parseFloat(newBill.gramount) -
+        (parseFloat(newBill.gramount) * parseFloat(newBill.grgst)) / 100;
       totalAmount =
-        parseFloat(newBill.amount) +
+        totalAfterGrAmount +
         (parseFloat(newBill.amount) * parseFloat(newBill.cgst)) / 100 +
-        (parseFloat(newBill.amount) * parseFloat(value)) / 100 +
-        (parseFloat(newBill.amount) * parseFloat(newBill.sgst)) / 100 -
-        parseFloat(newBill.gramount);
+        (parseFloat(newBill.amount) * parseFloat(newBill.sgst)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(value)) / 100;
       setNewBill({
         ...newBill,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
+        aftergramount: totalAfterGrAmount,
+        roundoffamount: Math.round(totalAmount),
       });
-    } else if (name === "sgst") {
+    } else if (name === "grgst") {
+      totalAfterGrAmount =
+        parseFloat(newBill.amount) -
+        parseFloat(newBill.gramount) -
+        (parseFloat(newBill.gramount) * parseFloat(value)) / 100;
       totalAmount =
-        parseFloat(newBill.amount) +
-        (parseFloat(newBill.amount) * parseFloat(value)) / 100 +
-        (parseFloat(newBill.amount) * parseFloat(newBill.igst)) / 100 +
-        (parseFloat(newBill.amount) * parseFloat(value)) / 100 -
-        parseFloat(newBill.gramount);
+        totalAfterGrAmount +
+        (parseFloat(newBill.amount) * parseFloat(newBill.cgst)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(newBill.sgst)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(newBill.igst)) / 100;
       setNewBill({
         ...newBill,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
+        aftergramount: totalAfterGrAmount,
+        roundoffamount: Math.round(totalAmount),
       });
     } else if (name === "amount") {
+      totalAfterGrAmount =
+        parseFloat(value) -
+        parseFloat(newBill.gramount) -
+        (parseFloat(newBill.gramount) * parseFloat(newBill.grgst)) / 100;
       totalAmount =
-        parseFloat(value) +
-        (parseFloat(newBill.amount) * parseFloat(newBill.cgst)) / 100 +
-        (parseFloat(newBill.amount) * parseFloat(newBill.igst)) / 100 +
-        (parseFloat(newBill.amount) * parseFloat(newBill.sgst)) / 100 -
-        parseFloat(newBill.gramount);
+        totalAfterGrAmount +
+        (parseFloat(value) * parseFloat(newBill.cgst)) / 100 +
+        (parseFloat(value) * parseFloat(newBill.sgst)) / 100 +
+        (parseFloat(value) * parseFloat(newBill.igst)) / 100;
       setNewBill({
         ...newBill,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
+        aftergramount: totalAfterGrAmount,
+        roundoffamount: Math.round(totalAmount),
       });
     } else if (name === "gramount") {
+      totalAfterGrAmount =
+        parseFloat(newBill.amount) -
+        parseFloat(value) -
+        (parseFloat(newBill.gramount) * parseFloat(newBill.grgst)) / 100;
       totalAmount =
-        parseFloat(newBill.amount) +
+        totalAfterGrAmount +
         (parseFloat(newBill.amount) * parseFloat(newBill.cgst)) / 100 +
-        (parseFloat(newBill.amount) * parseFloat(newBill.igst)) / 100 +
-        (parseFloat(newBill.amount) * parseFloat(newBill.sgst)) / 100 -
-        parseFloat(value);
+        (parseFloat(newBill.amount) * parseFloat(newBill.sgst)) / 100 +
+        (parseFloat(newBill.amount) * parseFloat(newBill.igst)) / 100;
       setNewBill({
         ...newBill,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
+        aftergramount: totalAfterGrAmount,
+        roundoffamount: Math.round(totalAmount),
       });
     } else {
       setNewBill({
@@ -122,6 +151,9 @@ const AddBillForm = () => {
       totalamount: 0,
       status: "Paid",
       date: new Date(),
+      aftergramount: 0,
+      roundoffamount: 0,
+      grgst: 0,
     });
     setLoaded(false);
   };
@@ -154,7 +186,7 @@ const AddBillForm = () => {
                     Bill No
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     className="form-control"
                     id="billno"
                     name="billno"
@@ -166,6 +198,29 @@ const AddBillForm = () => {
               </div>
             </div>
           </div>
+
+          <div className="row">
+            <div className="col-3"></div>
+            <div className="col-6">
+              <div className="mb-3 ">
+                <label htmlfor="amount" className="form-label">
+                  Edit Amount
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="amount"
+                  placeholder="Fetching... Please wait..."
+                  name="amount"
+                  value={newBill.amount}
+                  aria-describedby="amount"
+                  onChange={onChange}
+                />
+              </div>
+            </div>
+            <div className="col-3"></div>
+          </div>
+
           <div className="row">
             <div className="col-4">
               <div className="mb-3 ">
@@ -183,7 +238,6 @@ const AddBillForm = () => {
                 />
               </div>
             </div>
-
             <div className="col-4">
               <div className="mb-3 ">
                 <fieldset disabled>
@@ -219,10 +273,12 @@ const AddBillForm = () => {
               </div>
             </div>
           </div>
+
           <div className="row">
+            <div className="col-1"></div>
             <div className="col-6">
               <div className="mb-3 ">
-                <label htmlFor="gramount" className="form-label">
+                <label htmlfor="gramount" className="form-label">
                   GR Amount
                 </label>
                 <input
@@ -236,23 +292,25 @@ const AddBillForm = () => {
                 />
               </div>
             </div>
-            <div className="col-6">
+            <div className="col-4">
               <div className="mb-3 ">
-                <label htmlFor="balanceleft" className="form-label">
-                  Pending Amount
+                <label htmlfor="grgst" className="form-label">
+                  GR GST%
                 </label>
                 <input
                   type="number"
                   className="form-control"
-                  id="balanceleft"
-                  name="balanceleft"
-                  value={newBill.balanceleft}
-                  aria-describedby="balanceleft"
+                  id="grgst"
+                  name="grgst"
+                  value={newBill.grgst}
+                  aria-describedby="grgst"
                   onChange={onChange}
                 />
               </div>
             </div>
+            <div className="col-1"></div>
           </div>
+
           <div className="row">
             <div className="col-6">
               <div className="mb-3">
@@ -286,27 +344,48 @@ const AddBillForm = () => {
               </div>
             </div>
           </div>
+
           <div className="row">
             <div className="col-6">
               <div className="mb-3 ">
-                <label htmlFor="amount" className="form-label">
-                  Amount
+                <label htmlfor="balanceleft" className="form-label">
+                  Pending Amount
                 </label>
                 <input
                   type="number"
                   className="form-control"
-                  id="amount"
-                  name="amount"
-                  value={newBill.amount}
-                  aria-describedby="amount"
+                  id="balanceleft"
+                  name="balanceleft"
+                  value={newBill.balanceleft}
+                  aria-describedby="balanceleft"
                   onChange={onChange}
                 />
               </div>
             </div>
             <div className="col-6">
               <div className="mb-3 ">
+                <label htmlfor="aftergramount" className="form-label">
+                  After GR Amount
+                </label>
+                <input
+                  type="number"
+                  disabled={true}
+                  className="form-control"
+                  id="aftergramount"
+                  name="aftergramount"
+                  value={newBill.aftergramount}
+                  aria-describedby="aftergramount"
+                  onChange={onChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-6">
+              <div className="mb-3 ">
                 <fieldset disabled>
-                  <label htmlFor="totalamount" className="form-label">
+                  <label htmlfor="totalamount" className="form-label">
                     Total Amount
                   </label>
                   <input
@@ -321,7 +400,26 @@ const AddBillForm = () => {
                 </fieldset>
               </div>
             </div>
+            <div className="col-6">
+              <div className="mb-3 ">
+                <fieldset disabled>
+                  <label htmlfor="roundoffamount" className="form-label">
+                    Round Off Amount
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control text-success"
+                    id="roundoffamount"
+                    name="roundoffamount"
+                    value={newBill.roundoffamount}
+                    aria-describedby="roundoffamount"
+                    onChange={onChange}
+                  />
+                </fieldset>
+              </div>
+            </div>
           </div>
+
           <button type="submit" className="btn btn-warning">
             Add Bill
           </button>

@@ -21,6 +21,9 @@ router.post("/add/:shopid", async (req, res) => {
       balanceleft: req.body.balanceleft,
       status: req.body.status,
       date: req.body.date,
+      aftergramount: req.body.aftergramount,
+      roundoffamount: req.body.roundoffamount,
+      grgst: req.body.grgst
     });
 
     // check Shop, it exists or not
@@ -68,11 +71,12 @@ router.post("/:shopid/add/:billid", async (req, res) => {
       netamount: req.body.netamount,
       gst: req.body.gst,
 
+
       billid: req.params.billid,
     });
 
     const savedBillItem = await billItem.save();
-    console.log("billItem =",billItem);
+    console.log("billItem =", billItem);
     console.log(savedBillItem);
     if (savedBillItem) {
       console.log("Add BillItem Successfully", savedBillItem);
@@ -82,7 +86,7 @@ router.post("/:shopid/add/:billid", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" ,error});
+    res.status(500).json({ message: "Internal server error", error });
   }
 });
 
@@ -301,6 +305,9 @@ router.patch("/:shopid/edit/:billid", async (req, res) => {
       amount,
       totalamount,
       balanceleft,
+      roundoffamount,
+      aftergramount,
+      grgst
     } = req.body;
     const newBill = {};
     if (billno) newBill.billno = billno;
@@ -314,6 +321,9 @@ router.patch("/:shopid/edit/:billid", async (req, res) => {
     if (amount) newBill.amount = amount;
     if (totalamount) newBill.totalamount = totalamount;
     if (balanceleft) newBill.balanceleft = balanceleft;
+    if (roundoffamount) newBill.roundoffamount = roundoffamount;
+    if (aftergramount) newBill.aftergramount = aftergramount;
+    if (grgst) newBill.grgst = grgst;
 
     const newData = await Bill.findByIdAndUpdate(
       req.params.billid,

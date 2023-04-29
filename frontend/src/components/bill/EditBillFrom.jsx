@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import ReactDatePicker from "react-datepicker";
+import { parse } from "date-fns";
 
 const EditBillForm = () => {
   const context = useContext(BillContext);
@@ -30,6 +31,9 @@ const EditBillForm = () => {
       amount: "",
       totalamount: "",
       status: "",
+      aftergramount: "",
+      roundoffamount: "",
+      grgst: "",
       date: new Date(),
     });
     getBillData(shopId, isEdit.id);
@@ -40,77 +44,99 @@ const EditBillForm = () => {
   const onChange = (e) => {
     const { name, value } = e.target;
     let totalAmount = 0;
+    let totalAfterGrAmount = 0;
 
     if (name === "cgst") {
+      totalAfterGrAmount =
+        parseFloat(editBillData.amount) -
+        parseFloat(editBillData.gramount) -
+        (parseFloat(editBillData.gramount) * parseFloat(editBillData.grgst)) /
+          100;
       totalAmount =
-        parseFloat(editBillData.amount) +
-        (parseFloat(editBillData.amount) * 2 * parseFloat(value)) / 100 +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.isgt)) /
-          100 +
-        (parseFloat(editBillData.amount) * parseFloat(value)) / 100 -
-        parseFloat(editBillData.gramount);
+        totalAfterGrAmount +
+        (parseFloat(editBillData.amount) * parseFloat(value)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(value)) / 100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) / 100;
       setEditBillData({
         ...editBillData,
         sgst: value,
         cgst: value,
         totalamount: totalAmount.toFixed(2),
+        aftergramount: totalAfterGrAmount,
+        roundoffamount: Math.round(totalAmount),
       });
     } else if (name === "igst") {
+      totalAfterGrAmount =
+        parseFloat(editBillData.amount) - parseFloat(editBillData.gramount) -
+        (parseFloat(editBillData.gramount) * parseFloat(editBillData.grgst)) /
+          100;
       totalAmount =
-        parseFloat(editBillData.amount) +
+        totalAfterGrAmount +
         (parseFloat(editBillData.amount) * parseFloat(editBillData.cgst)) /
           100 +
-        (parseFloat(editBillData.amount) * parseFloat(value)) / 100 +
         (parseFloat(editBillData.amount) * parseFloat(editBillData.sgst)) /
-          100 -
-        parseFloat(editBillData.gramount);
-      setEditBillData({
-        ...editBillData,
-        [name]: value,
-        totalamount: totalAmount.toFixed(2),
-      });
-    } else if (name === "sgst") {
-      totalAmount =
-        parseFloat(editBillData.amount) +
-        (parseFloat(editBillData.amount) * parseFloat(value)) / 100 +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) /
           100 +
-        (parseFloat(editBillData.amount) * parseFloat(value)) / 100 -
-        parseFloat(editBillData.gramount);
+        (parseFloat(editBillData.amount) * parseFloat(value)) / 100;
       setEditBillData({
         ...editBillData,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
+        aftergramount: totalAfterGrAmount,
+        roundoffamount: Math.round(totalAmount),
+      });
+    }else if (name === "grgst") {
+      totalAfterGrAmount =
+        parseFloat(editBillData.amount) - parseFloat(editBillData.gramount) -
+        (parseFloat(editBillData.gramount) * parseFloat(value)) /
+          100;
+      totalAmount =
+        totalAfterGrAmount +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.cgst)) /
+          100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.sgst)) /
+          100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) / 100;
+      setEditBillData({
+        ...editBillData,
+        [name]: value,
+        totalamount: totalAmount.toFixed(2),
+        aftergramount: totalAfterGrAmount,
+        roundoffamount: Math.round(totalAmount),
       });
     } else if (name === "amount") {
+      totalAfterGrAmount =
+        parseFloat(value) - parseFloat(editBillData.gramount) -
+        (parseFloat(editBillData.gramount) * parseFloat(editBillData.grgst)) /
+          100;
       totalAmount =
-        parseFloat(value) +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.cgst)) /
-          100 +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) /
-          100 +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.sgst)) /
-          100 -
-        parseFloat(editBillData.gramount);
+        totalAfterGrAmount +
+        (parseFloat(value) * parseFloat(editBillData.cgst)) / 100 +
+        (parseFloat(value) * parseFloat(editBillData.sgst)) / 100 +
+        (parseFloat(value) * parseFloat(editBillData.igst)) / 100;
       setEditBillData({
         ...editBillData,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
+        aftergramount: totalAfterGrAmount,
+        roundoffamount: Math.round(totalAmount),
       });
     } else if (name === "gramount") {
+      totalAfterGrAmount = parseFloat(editBillData.amount) - parseFloat(value)-
+      (parseFloat(editBillData.gramount) * parseFloat(editBillData.grgst)) /
+        100;
       totalAmount =
-        parseFloat(editBillData.amount) +
+        totalAfterGrAmount +
         (parseFloat(editBillData.amount) * parseFloat(editBillData.cgst)) /
           100 +
-        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) /
-          100 +
         (parseFloat(editBillData.amount) * parseFloat(editBillData.sgst)) /
-          100 -
-        parseFloat(value);
+          100 +
+        (parseFloat(editBillData.amount) * parseFloat(editBillData.igst)) / 100;
       setEditBillData({
         ...editBillData,
         [name]: value,
         totalamount: totalAmount.toFixed(2),
+        aftergramount: totalAfterGrAmount,
+        roundoffamount: Math.round(totalAmount),
       });
     } else {
       setEditBillData({
@@ -141,7 +167,10 @@ const EditBillForm = () => {
       amount: "",
       totalamount: "",
       status: "",
+      aftergramount: "",
+      roundoffamount: "",
       date: new Date(),
+      grgst: "",
     });
     setIsEdit({
       value: false,
@@ -156,7 +185,7 @@ const EditBillForm = () => {
           Edit Bill {`${editBillData.billid}`}
         </h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-3 ">
+          <div className=" ">
             <div className="row">
               <div className="col-6">
                 <label htmlfor="billid" className="form-label">
@@ -179,7 +208,7 @@ const EditBillForm = () => {
                     Edit Bill No
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     className="form-control"
                     id="billno"
                     name="billno"
@@ -192,6 +221,29 @@ const EditBillForm = () => {
               </div>
             </div>
           </div>
+
+          <div className="row">
+            <div className="col-3"></div>
+            <div className="col-6">
+              <div className="mb-3 ">
+                <label htmlfor="amount" className="form-label">
+                  Edit Amount
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="amount"
+                  placeholder="Fetching... Please wait..."
+                  name="amount"
+                  value={editBillData.amount}
+                  aria-describedby="amount"
+                  onChange={onChange}
+                />
+              </div>
+            </div>
+            <div className="col-3"></div>
+          </div>
+
           <div className="row">
             <div className="col-4">
               <div className="mb-3 ">
@@ -249,6 +301,7 @@ const EditBillForm = () => {
             </div>
           </div>
           <div className="row">
+            <div className="col-1"></div>
             <div className="col-6">
               <div className="mb-3 ">
                 <label htmlfor="gramount" className="form-label">
@@ -266,23 +319,24 @@ const EditBillForm = () => {
                 />
               </div>
             </div>
-            <div className="col-6">
+            <div className="col-4">
               <div className="mb-3 ">
-                <label htmlfor="balanceleft" className="form-label">
-                  Edit Pending Amount
+                <label htmlfor="grgst" className="form-label">
+                  Edit GR GST%
                 </label>
                 <input
                   type="number"
                   className="form-control"
-                  id="balanceleft"
-                  name="balanceleft"
-                  value={editBillData.balanceleft}
-                  aria-describedby="balanceleft"
+                  id="grgst"
+                  name="grgst"
+                  value={editBillData.grgst}
+                  aria-describedby="grgst"
                   onChange={onChange}
                   placeholder="Fetching... Please wait..."
                 />
               </div>
             </div>
+            <div className="col-1"></div>
           </div>
           <div className="row">
             <div className="col-6">
@@ -324,21 +378,41 @@ const EditBillForm = () => {
           <div className="row">
             <div className="col-6">
               <div className="mb-3 ">
-                <label htmlfor="amount" className="form-label">
-                  Edit Amount
+                <label htmlfor="balanceleft" className="form-label">
+                  Edit Pending Amount
                 </label>
                 <input
                   type="number"
                   className="form-control"
-                  id="amount"
+                  id="balanceleft"
+                  name="balanceleft"
+                  value={editBillData.balanceleft}
+                  aria-describedby="balanceleft"
+                  onChange={onChange}
                   placeholder="Fetching... Please wait..."
-                  name="amount"
-                  value={editBillData.amount}
-                  aria-describedby="amount"
+                />
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="mb-3 ">
+                <label htmlfor="aftergramount" className="form-label">
+                  Edit After GR Amount
+                </label>
+                <input
+                  type="number"
+                  disabled={true}
+                  className="form-control"
+                  id="aftergramount"
+                  placeholder="Fetching... Please wait..."
+                  name="aftergramount"
+                  value={editBillData.aftergramount}
+                  aria-describedby="aftergramount"
                   onChange={onChange}
                 />
               </div>
             </div>
+          </div>
+          <div className="row">
             <div className="col-6">
               <div className="mb-3 ">
                 <fieldset disabled>
@@ -353,6 +427,25 @@ const EditBillForm = () => {
                     value={editBillData.totalamount}
                     placeholder="Fetching... Please wait..."
                     aria-describedby="totalamount"
+                    onChange={onChange}
+                  />
+                </fieldset>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="mb-3 ">
+                <fieldset disabled>
+                  <label htmlfor="roundoffamount" className="form-label">
+                    Round Off Amount
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control text-success"
+                    id="roundoffamount"
+                    name="roundoffamount"
+                    value={editBillData.roundoffamount}
+                    placeholder="Fetching... Please wait..."
+                    aria-describedby="roundoffamount"
                     onChange={onChange}
                   />
                 </fieldset>

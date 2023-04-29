@@ -61,10 +61,19 @@ const BillsTable = () => {
               GR Amount
             </th>
             <th scope="col" className=" text-bg-warning">
+              GR GST%
+            </th>
+            <th scope="col" className=" text-bg-warning">
               Amount
             </th>
             <th scope="col" className=" text-bg-warning">
-              Total Amount
+              Amount After GR
+            </th>
+            <th scope="col" className=" text-bg-warning">
+              Total Amount 
+            </th>
+            <th scope="col" className=" text-bg-warning">
+              Round OFF Amount
             </th>
             <th scope="col" className=" text-bg-warning">
               Pending Amount
@@ -102,8 +111,11 @@ const BillsTable = () => {
                   <td>{bill.sgst}</td>
                   <td>{bill.igst}</td>
                   <td>{bill.gramount}</td>
+                  <td>{bill.grgst}</td>
                   <td>{bill.amount}</td>
+                  <td>{bill.aftergramount}</td>
                   <td>{bill.totalamount}</td>
+                  <td className="text-dark">{bill.roundoffamount}</td>
                   <td>{bill.balanceleft}</td>
                   <td>
                     {" "}
