@@ -67,6 +67,36 @@ const AllBills = () => {
     setBillsData(sortedBills);
   };
 
+  function exportTableToExcel(tableID, filename = "") {
+    var downloadLink;
+    var dataType = "application/vnd.ms-excel";
+    var tableSelect = document.getElementById(tableID);
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, "%20");
+
+    // Specify file name
+    filename = filename ? filename + ".xls" : "excel_data.xls";
+
+    // Create download link element
+    downloadLink = document.createElement("a");
+
+    document.body.appendChild(downloadLink);
+
+    if (navigator.msSaveOrOpenBlob) {
+      var blob = new Blob(["\ufeff", tableHTML], {
+        type: dataType,
+      });
+      navigator.msSaveOrOpenBlob(blob, filename);
+    } else {
+      // Create a link to the file
+      downloadLink.href = "data:" + dataType + ", " + tableHTML;
+      // Setting the file name
+      downloadLink.download = filename;
+
+      //triggering the function
+      downloadLink.click();
+    }
+  }
+
   return (
     <div>
       {" "}
@@ -137,7 +167,7 @@ const AllBills = () => {
                 </button>
               </div>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <label htmlfor="fromDate" className="form-label">
                 From Date
               </label>
@@ -151,7 +181,7 @@ const AllBills = () => {
                 }}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <label htmlfor="toDate" className="form-label">
                 To Date
               </label>
@@ -165,10 +195,20 @@ const AllBills = () => {
                 }}
               />
             </div>
+            <div className="col-md-2 ">
+              <label>Download as Excel</label>
+              <button
+                className="btn btn-warning"
+                onClick={() => exportTableToExcel("tblData")}
+              >
+                <strong>Download </strong>
+                <i class="fa-solid fa-download "></i>
+              </button>
+            </div>
           </div>
         </div>
 
-        <table className="table">
+        <table className="table" id="tblData">
           <thead>
             <tr>
               <th scope="col" className=" text-bg-warning">

@@ -9,8 +9,7 @@ const shopSchema = new Schema({
   },
   gstno: {
     type: String,
-    required: true,
-    unique: true,
+   
   },
   location: {
     type: String,

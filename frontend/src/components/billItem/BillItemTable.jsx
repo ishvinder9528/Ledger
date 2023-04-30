@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import BillContext from "../../contexts/bill/billContext";
 import Spinner from "../Spinner";
+import { useLocation } from "react-router-dom";
 
 const BillItemTable = () => {
+  const location = useLocation();
   const context = useContext(BillContext);
   const { billItems, deleteBillItem, shopId, bill_Id, itemLoad, setItemLoad } =
     context;
@@ -50,9 +52,11 @@ const BillItemTable = () => {
             <th scope="col" className=" text-bg-warning">
               Net Amount
             </th>
-            <th scope="col" className=" text-bg-warning">
-              Delete
-            </th>
+            {!location.pathname === "/all" && (
+              <th scope="col" className=" text-bg-warning">
+                Delete
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -74,17 +78,18 @@ const BillItemTable = () => {
                   <td>{billItem.discount}</td>
                   <td>{billItem.gst}</td>
                   <td>{billItem.netamount}</td>
-
-                  <td>
-                    <i
-                      className="fa-solid fa-trash-can fa-lg"
-                      style={{ color: "red" }}
-                      onClick={() => {
-                        deleteBillItem(shopId, bill_Id, billItem._id);
-                        setItemLoad(false);
-                      }}
-                    ></i>
-                  </td>
+                  {!location.pathname === "/all" && (
+                    <td>
+                      <i
+                        className="fa-solid fa-trash-can fa-lg"
+                        style={{ color: "red" }}
+                        onClick={() => {
+                          deleteBillItem(shopId, bill_Id, billItem._id);
+                          setItemLoad(false);
+                        }}
+                      ></i>
+                    </td>
+                  )}
                 </tr>
               );
             })
