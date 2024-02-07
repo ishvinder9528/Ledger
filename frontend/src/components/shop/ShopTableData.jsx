@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
-import ShopContext from "../contexts/shop/shopContext";
+import ShopContext from "../../contexts/shop/shopContext";
 const ShopTableData = (props) => {
   const { shop } = props;
   const location = useLocation();
@@ -18,21 +18,21 @@ const ShopTableData = (props) => {
           <>
             <td>
               <i
-                class="fa-solid fa-user-pen fa-lg"
+                className="fa-solid fa-user-pen fa-lg"
                 style={{ color: "#ffbd61" }}
                 onClick={() => setIsEdit({ value: true, id: shop._id })}
               ></i>
             </td>
             <td>
               <i
-                class="fa-solid fa-trash-can fa-lg"
+                className="fa-solid fa-trash-can fa-lg"
                 style={{ color: "red" }}
                 onClick={() => deleteShop(shop._id)}
               ></i>
             </td>
             <td>
               <i
-                class="fa-solid fa-hand-pointer fa-lg"
+                className="fa-solid fa-hand-pointer fa-lg"
                 style={{ color: "#0aea06" }}
               ></i>
             </td>

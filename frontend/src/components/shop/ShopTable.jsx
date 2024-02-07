@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import ShopContext from "../contexts/shop/shopContext";
+import ShopContext from "../../contexts/shop/shopContext";
 import ShopTableData from "./ShopTableData";
 import { useLocation } from "react-router-dom";
 
@@ -8,45 +8,42 @@ const ShopTable = (props) => {
   const context = useContext(ShopContext);
   const { getShops, shops } = context;
   let location = useLocation();
-  // console.log(location.pathname);
+
   useEffect(() => {
     getShops();
-    // console.log(shops);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shops]);
-
-  // console.log(shops);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <div className={` mx-1 `}>
+    <div className="mx-1 table-responsive">
       <section>
-        <table className="table text-center">
+        <table className="table text-center table-sm">
           <thead>
             <tr>
-              <th scope="col" className=" text-bg-warning">
+              <th scope="col" className="text-bg-warning">
                 Name
               </th>
-              <th scope="col" className=" text-bg-warning">
+              <th scope="col" className="text-bg-warning">
                 GST No.
               </th>
-              <th scope="col" className=" text-bg-warning">
+              <th scope="col" className="text-bg-warning">
                 Location
               </th>
-              <th scope="col" className=" text-bg-warning">
+              <th scope="col" className="text-bg-warning">
                 Phone Number
               </th>
-              <th scope="col" className=" text-bg-warning">
+              <th scope="col" className="text-bg-warning">
                 Pending Amount
               </th>
               {location.pathname !== "/" && (
                 <>
-                  <th scope="col" className=" text-bg-warning">
+                  <th scope="col" className="text-bg-warning">
                     Edit
                   </th>
-                  <th scope="col" className=" text-bg-warning">
+                  <th scope="col" className="text-bg-warning">
                     Delete
                   </th>
-                  <th scope="col" className=" text-bg-warning">
+                  <th scope="col" className="text-bg-warning">
                     GO
                   </th>
                 </>

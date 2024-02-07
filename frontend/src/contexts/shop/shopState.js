@@ -28,8 +28,10 @@ const ShopState = (props) => {
       const response = await fetch(`${host}/shops/allshops`, {
         method: "GET",
       });
-      let data = await response.json();
-      setShops(data.shopData);
+      if (response.ok) {
+        let data = await response.json();
+        setShops(data.shopData);
+      }
     } catch (error) {
       showAlert("Opps, Something went wrong", "danger");
     }
@@ -45,11 +47,14 @@ const ShopState = (props) => {
         },
         body: JSON.stringify(shop),
       });
+      if (response.ok) {
+        let data = await response.json();
 
-      let data = await response.json();
-
-      setShops(shops.concat(data));
-      showAlert("Shop Added Successfully!", "success");
+        setShops(shops.concat(data));
+        showAlert("Shop Added Successfully!", "success");
+      } else {
+        showAlert("GST number already exists", "danger");
+      }
     } catch (error) {
       showAlert("Opps, Something went wrong", "danger");
     }
@@ -109,8 +114,8 @@ const ShopState = (props) => {
   };
 
   // Update the shop data
-  const updateShop = async (data,id) => {
-    console.log(data,id);
+  const updateShop = async (data, id) => {
+    console.log(data, id);
     const request = await fetch(`${host}/shops/${id}`, {
       method: "PATCH",
       headers: {
@@ -118,17 +123,17 @@ const ShopState = (props) => {
       },
       body: JSON.stringify(data),
     });
-    if(request.ok) {
-      const newShops = JSON.parse(JSON.stringify(shops))
-      for(let i = 0; i < newShops.length; i++){
-        const element = newShops[i]
-        if(element._id === id){
-          newShops[i]=data
-          break
+    if (request.ok) {
+      const newShops = JSON.parse(JSON.stringify(shops));
+      for (let i = 0; i < newShops.length; i++) {
+        const element = newShops[i];
+        if (element._id === id) {
+          newShops[i] = data;
+          break;
         }
       }
-      setShops(newShops)
-      showAlert("Shop Data Updated Successfully","success")
+      setShops(newShops);
+      showAlert("Shop Data Updated Successfully", "success");
     }
   };
 

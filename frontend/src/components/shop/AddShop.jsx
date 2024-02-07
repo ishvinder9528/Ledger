@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import ShopContext from "../contexts/shop/shopContext";
+import ShopContext from "../../contexts/shop/shopContext";
 
 const AddShop = () => {
   const [shop, setShop] = useState({
@@ -30,41 +30,41 @@ const AddShop = () => {
     <div className="mx-4 border border-warning  p-4">
       <h3 className="text-center text-warning">Add Shop</h3>
       <form onSubmit={handleSubmit}>
-        <div class="mb-3">
-          <label for="name" class="form-label">
+        <div className="mb-3">
+          <label htmfor="name" className="form-label">
             Shop Name
           </label>
           <input
             type="text"
             name="name"
-            class="form-control"
+            className="form-control"
             id="name"
             aria-describedby="name"
             onChange={onChange}
           />
         </div>
-        <div class="mb-3">
-          <label for="gstno" class="form-label">
+        <div className="mb-3">
+          <label htmfor="gstno" className="form-label">
             GST Number
           </label>
           <input
             type="text"
             name="gstno"
-            class="form-control"
+            className="form-control"
             id="gstno"
             aria-describedby="gstno"
             onChange={onChange}
           />
         </div>
         <span>
-          <div class="mb-3" style={{ maxWidth: "20rem" }}>
-            <label for="location" class="form-label">
+          <div className="mb-3" style={{ maxWidth: "20rem" }}>
+            <label htmfor="location" className="form-label">
               Location
             </label>
             <input
               type="text"
               name="location"
-              class="form-control"
+              className="form-control"
               id="location"
               aria-describedby="location"
               onChange={onChange}
@@ -72,14 +72,14 @@ const AddShop = () => {
           </div>
         </span>
         <span>
-          <div class="form-outline mb-3" style={{ maxWidth: "20rem" }}>
-            <label for="phone" class="form-label">
+          <div className="form-outline mb-3" style={{ maxWidth: "20rem" }}>
+            <label htmfor="phone" className="form-label">
               Phone Number
             </label>
             <input
               type="number"
               name="phone"
-              class="form-control"
+              className="form-control"
               id="phone"
               placeholder=" 9999999999"
               aria-describedby="phone"
@@ -87,21 +87,21 @@ const AddShop = () => {
             />
           </div>
         </span>
-        <div class="mb-3" style={{ maxWidth: "20rem" }}>
-          <label for="pendingAmount" class="form-label">
+        <div className="mb-3" style={{ maxWidth: "20rem" }}>
+          <label htmfor="pendingAmount" className="form-label">
             Pending Amount
           </label>
           <input
             type="number"
             name="pendingAmount"
-            class="form-control"
+            className="form-control"
             id="pendingAmount"
             aria-describedby="pendingAmount"
             onChange={onChange}
           />
         </div>
 
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           Submit
         </button>
       </form>
